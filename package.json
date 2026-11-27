@@ -1,0 +1,15 @@
+{
+  "name": "balamitra-sxw",
+  "version": "1.0.0",
+  "description": "Balamitra: Voice-first, offline-capable Indic Early Childhood Development & Anganwadi Co-Pilot",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Balamitra (బాలమిత్ర) — Voice-First Anganwadi Co-Pilot</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <!-- Top Header -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="logo-badge">B</div>
+        <div>
+          <div class="brand-title" id="ui-app-title">Balamitra • బాలమిత్ర</div>
+          <div class="brand-sub" id="ui-center-sub">Bachupally-1 AWC (3601050201) • Offline-Ready</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <div class="lang-pills">
+          <button class="lang-btn" data-lang="te">తెలుగు</button>
+          <button class="lang-btn" data-lang="hi">हिन्दी</button>
+          <button class="lang-btn active" data-lang="en">English</button>
+        </div>
+        <button class="btn-tour-pill" id="btn-open-tour">✨ Tour</button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="main-content">
+      <div class="loading-box">Loading Balamitra Anganwadi Co-Pilot...</div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-tab="today">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label" id="nav-today">Today</span>
+      </button>
+      <button class="nav-btn" data-tab="observe">
+        <span class="nav-icon">🎙️</span>
+        <span class="nav-label" id="nav-observe">Voice</span>
+      </button>
+      <button class="nav-btn" data-tab="children">
+        <span class="nav-icon">👶</span>
+        <span class="nav-label" id="nav-children">Children</span>
+      </button>
+      <button class="nav-btn" data-tab="insights">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label" id="nav-insights">Insights</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Modal Container -->
+  <div id="modal-root" class="modal-backdrop hidden"></div>
+  <div id="toast-root" class="toast hidden"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
