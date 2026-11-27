@@ -909,7 +909,7 @@ function renderChildStory(c) {
       </div>
     </div>
 
-    ${c.adaptiveDietPlan ? `
+${c.adaptiveDietPlan ? `
       <div class="card card-green">
         <div class="row-between">
           <strong class="row-center" style="font-size:13px;color:var(--green);">${svg("utensils", 14)} ${t("adaptiveDietTitle")}</strong>
@@ -918,6 +918,210 @@ function renderChildStory(c) {
         <p style="font-size:12px;margin-top:6px;">${c.adaptiveDietPlan}</p>
       </div>
     ` : ""}
+
+    <div class="card card-blue">
+      <div class="row-between">
+        <strong class="row-center" style="font-size:13px;color:var(--blue);">${svg("volume", 14)} ${t("speechTitle")}</strong>
+        <button class="btn btn-outline btn-sm" id="btn-toggle-speech">${appState.speechExpanded ? "Hide" : "Review"}</button>
+      </div>
+      <div style="margin-top:8px;font-size:12px;">
+        <strong>${t("whenToRefer")} (${c.ageYears}y):</strong>
+        <p style="margin-top:2px;">${sg.whenToReferSummary}</p>
+      </div>
+      ${appState.speechExpanded ? `
+        <div style="margin-top:8px;font-size:11.5px;display:flex;flex-direction:column;gap:6px;">
+          <div class="row-center" style="color:var(--red);font-weight:700;">${svg("alert", 13)} Key Warning Red Flags:</div>
+          <ul style="padding-left:18px;">${sg.keyIndicators.map((i) => `<li>${i}</li>`).join("")}</ul>
+          <div class="card card-gold" style="padding:8px;"><strong>Anganwadi Action (RBSK / DEIC):</strong> ${sg.anganwadiAction}</div>
+          <div class="card" style="padding:8px;"><strong>Parent Guidance:</strong> ${sg.parentGuidance}</div>
+          <button class="btn btn-outline btn-sm" id="btn-toggle-milestones">${appState.milestonesExpanded ? "Hide 1-6y Milestones Matrix" : "View Full 1-6y Speech Milestones Matrix"}</button>
+          ${appState.milestonesExpanded ? appState.speechMilestones.map((m) => `
+            <div class="card" style="padding:8px;font-size:11px;">
+              <strong>${m.ageMonthsRange}</strong>
+              <div style="color:var(--green);">Expected: ${m.expectedMilestone}</div>
+              <div style="color:var(--red);">Red Flag: ${m.redFlagIndicator}</div>
+            </div>
+          `).join("") : ""}
+        </div>
+      ` : ""}
+    </div>
+
+    <!-- Hero Buttons Row: What Changed + Connect The Dots -->
+    <div class="grid-2">
+      <button class="btn btn-primary" id="btn-what-changed">${svg("compare", 14)} ${t("whatChangedTitle")}</button>
+      <button class="btn btn-dark" id="btn-connect-dots">${svg("sparkles", 14)} ${t("connectDotsTitle")}</button>
+    </div>
+
+    <!-- Suggested Next Action Card with WHY?, Re-Observe, Override, Skip -->
+    <div class="card">
+      <div class="row-between">
+        <strong style="font-size:11.5px;color:var(--gold-dark);text-transform:uppercase;">${t("activityTitle")}</strong>
+        <button class="btn btn-outline btn-sm" id="btn-why-this">${svg("help", 13)} ${t("whyThis")}</button>
+      </div>
+      <div style="font-weight:800;font-size:15.5px;margin-top:6px;">${act.title}</div>
+      <div style="font-size:11.5px;color:var(--green);font-weight:600;margin-top:2px;">
+        ${act.durationMinutes} mins • Materials: ${act.materials.join(", ")}
+      </div>
+      <ol style="padding-left:18px;font-size:12px;margin-top:8px;display:flex;flex-direction:column;gap:3px;">
+        ${act.steps.map((s) => `<li>${s}</li>`).join("")}
+      </ol>
+      <div style="display:flex;gap:6px;margin-top:12px;">
+        <button class="btn btn-green btn-sm" id="btn-do-activity" style="flex:1.3;">${svg("play", 13)} ${t("doActivity")}</button>
+        <button class="btn btn-outline btn-sm" id="btn-change-activity" style="flex:1;">${svg("edit", 13)} ${t("changeActivity")}</button>
+        <button class="btn btn-outline btn-sm" id="btn-skip-activity" style="flex:0.8;">${t("skipActivity")}</button>
+      </div>
+      <button class="btn btn-dark" id="btn-explain-parent" style="width:100%;margin-top:8px;">${svg("volume", 14)} ${t("explainParent")}</button>
+    </div>
+
+    <div class="section-label">${t("timelineTitle")}</div>
+    ${c.developmentHistory.map((d) => `
+      <div class="card">
+        <div class="row-between">
+          <span style="font-size:11px;font-weight:700;color:var(--gold-dark);">${formatDate(d.timestampEpochMs)}</span>
+          ${d.needsFollowUp ? `<span class="badge badge-gold">Worth Observing</span>` : `<span class="badge badge-green">${d.domain}</span>`}
+        </div>
+        <p style="font-size:12.5px;margin-top:4px;">${d.observationText}</p>
+        ${d.rawWorkerSpeech ? `<div style="font-size:11px;color:var(--subtle);margin-top:3px;">Spoken: "${d.rawWorkerSpeech}"</div>` : ""}
+      </div>
+    `).join("")}
+  `;
+}
+
+function bindChildStoryEvents(c) {
+  document.getElementById("btn-back-children").onclick = () => { appState.selectedChildId = null; render(); };
+  document.getElementById("btn-toggle-speech").onclick = () => { appState.speechExpanded = !appState.speechExpanded; render(); };
+  const msBtn = document.getElementById("btn-toggle-milestones");
+  if (msBtn) msBtn.onclick = () => { appState.milestonesExpanded = !appState.milestonesExpanded; render(); };
+
+  document.getElementById("btn-what-changed").onclick = () => {
+    openModal(`
+      <div class="row-between">
+        <strong class="row-center" style="font-size:14px;">${svg("compare", 15)} ${t("whatChangedTitle")} — ${c.name}</strong>
+        <button class="btn btn-outline btn-sm" onclick="closeModal()">${svg("x", 14)}</button>
+      </div>
+      <div class="card card-gold"><p style="font-size:12.5px;">${c.whatChanged}</p></div>
+      <div class="card" style="font-size:12px;"><strong>Trajectory Summary:</strong> ${c.trajectorySummary}</div>
+      <button class="btn btn-dark" onclick="closeModal()">Close</button>
+    `);
+  };
+
+  document.getElementById("btn-connect-dots").onclick = () => {
+    openModal(`
+      <div class="row-between">
+        <strong class="row-center" style="font-size:14px;">${svg("sparkles", 15)} ${t("connectDotsTitle")}</strong>
+        <button class="btn btn-outline btn-sm" onclick="closeModal()">${svg("x", 14)}</button>
+      </div>
+      <div class="card card-dark">
+        <strong style="color:var(--gold);font-size:13.5px;">${c.connectDots.headline.replace(/^[\u{1F300}-\u{1FAFF}\s]+/u, "")}</strong>
+        <p style="font-size:12px;color:#D1D5DB;margin-top:6px;">${c.connectDots.story}</p>
+      </div>
+      <div class="card card-green" style="font-size:12px;"><strong>Recommendation:</strong> ${c.connectDots.recommendation}</div>
+      <button class="btn btn-dark" onclick="closeModal()">Close</button>
+    `);
+  };
+
+  document.getElementById("btn-why-this").onclick = () => {
+    openModal(`
+      <div class="row-between">
+        <strong class="row-center" style="font-size:14px;">${svg("help", 15)} Evidence & Personalization</strong>
+        <button class="btn btn-outline btn-sm" onclick="closeModal()">${svg("x", 14)}</button>
+      </div>
+      <div class="card card-blue" style="font-size:12.5px;">${c.recommendedActivity.whyThis}</div>
+      <button class="btn btn-dark" onclick="closeModal()">Close</button>
+    `);
+  };
+
+  document.getElementById("btn-do-activity").onclick = () => {
+    openModal(`
+      <div class="row-between">
+        <strong style="font-size:14px;">Record Activity Outcome (${c.name})</strong>
+        <button class="btn btn-outline btn-sm" onclick="closeModal()">${svg("x", 14)}</button>
+      </div>
+      <div style="font-size:12px;color:var(--muted);">Activity: <strong>${c.recommendedActivity.title}</strong></div>
+      <select id="reobs-outcome" class="select">
+        <option value="COMPLETED_EASILY">Completed Easily & Engaged</option>
+        <option value="NEEDED_HELP">Needed Gentle Scaffolding</option>
+        <option value="DISENGAGED">Disengaged / Fatigued Today</option>
+      </select>
+      <textarea id="reobs-notes" class="textarea" rows="2" placeholder="Optional worker notes..."></textarea>
+      <button class="btn btn-green" id="btn-submit-reobs">${svg("check", 14)} Save Re-Observation</button>
+    `);
+    document.getElementById("btn-submit-reobs").onclick = async () => {
+      await fetch("/api/reobserve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          childId: c.id,
+          activityTitle: c.recommendedActivity.title,
+          outcome: document.getElementById("reobs-outcome").value,
+          notes: document.getElementById("reobs-notes").value
+        })
+      });
+      closeModal();
+      showToast("Post-activity re-observation saved to timeline");
+      await fetchState();
+    };
+  };
+
+  document.getElementById("btn-change-activity").onclick = () => {
+    openModal(`
+      <div class="row-between">
+        <strong style="font-size:14px;">Worker Authority Override</strong>
+        <button class="btn btn-outline btn-sm" onclick="closeModal()">${svg("x", 14)}</button>
+      </div>
+      <select id="override-reason" class="select">
+        <option value="CHILD_TIRED">Child seems tired or unwell today</option>
+        <option value="MATERIAL_MISSING">Required household material unavailable</option>
+        <option value="GROUP_ROUTINE">Switching to group circle-time activity</option>
+      </select>
+      <button class="btn btn-primary" id="btn-submit-override">Record Override</button>
+    `);
+    document.getElementById("btn-submit-override").onclick = async () => {
+      await fetch("/api/activity-feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ childId: c.id, activityId: c.recommendedActivity.id, decision: "CHANGE", notes: document.getElementById("override-reason").value })
+      });
+      closeModal();
+      showToast("Worker override recorded");
+    };
+  };
+
+  document.getElementById("btn-skip-activity").onclick = async () => {
+    await fetch("/api/activity-feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ childId: c.id, activityId: c.recommendedActivity.id, decision: "SKIP" })
+    });
+    showToast("Activity skipped — logged for personalization");
+  };
+
+  document.getElementById("btn-explain-parent").onclick = () => {
+    openModal(`
+      <div class="row-between">
+        <strong class="row-center" style="font-size:14px;">${svg("volume", 15)} Parent Counseling Script</strong>
+        <button class="btn btn-outline btn-sm" onclick="closeModal()">${svg("x", 14)}</button>
+      </div>
+      <div class="card card-gold" style="font-size:13px;">"${c.recommendedActivity.parentExplain}"</div>
+      <button class="btn btn-dark" onclick="closeModal()">Close</button>
+    `);
+  };
+}
+
+function renderInsightsTab() {
+  const total = appState.children.length;
+  const samMam = appState.children.filter((c) => c.whoMetrics?.category !== "Normal").length;
+  const special = appState.children.filter((c) => c.specialNeedsTitle).length;
+  const present = Object.values(appState.attendanceMap).filter(Boolean).length;
+
+  return `
+    <div style="font-weight:800;font-size:16px;">Anganwadi Centre Insights</div>
+    <div class="grid-2">
+      <div class="stat-box"><div class="stat-val">${total}</div><div class="stat-lbl">Enrolled Children</div></div>
+      <div class="stat-box"><div class="stat-val">${present}/${total}</div><div class="stat-lbl">Present Today</div></div>
+      <div class="stat-box"><div class="stat-val" style="color:var(--red);">${samMam}</div><div class="stat-lbl">Growth Review (SAM/MAM)</div></div>
+      <div class="stat-box"><div class="stat-val" style="color:var(--green);">${special}</div><div class="stat-lbl">Inclusive Special Care</div></div>
+    </div>
 
     <div class="card">
       <strong class="row-center" style="font-size:13.5px;">${svg("file", 15)} Poshan Tracker Government Export (MoWCD)</strong>
