@@ -21,8 +21,8 @@ See `.env.example` for optional external keys (`BHASHINI_API_KEY`, `GEMINI_API_K
 
 ## Key Capabilities
 
-1. **Voice-First Indic Intake (Telugu / Hindi / English)**
-   - Live browser speech recognition (`Web Speech API` in `te-IN`, `hi-IN`, `en-IN`) plus 1-tap realistic voice samples.
+1. **Voice-First Indic Intake (Telugu / Hindi / Kannada / Marathi / English)**
+   - Live browser speech recognition (`Web Speech API` in `te-IN`, `hi-IN`, `kn-IN`, `mr-IN`, `en-IN`) plus 1-tap realistic voice samples across all 5 languages.
    - Deterministic multilingual NLP & Levenshtein fuzzy matching extracts child identity, weight, height, meals, illness flags, and developmental domain.
 2. **Deterministic WHO Growth & Connect The Dots Engine**
    - Computes Weight-for-Age Z-score (WAZ) proxies, longitudinal weight trajectories, and correlates illness episodes with classroom fatigue.
