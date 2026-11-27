@@ -24,16 +24,35 @@ function levenshtein(a, b) {
   return dp[m][n];
 }
 
+const CHILD_NAME_ALIASES = {
+  child_raju: ["raju", "రాజు", "राजू"],
+  child_lakshmi: ["lakshmi", "లక్ష్మి", "లక్ష్మీ", "लक्ष्मी"],
+  child_chitti: ["chitti", "చిట్టి", "चिट्टी"],
+  child_suresh: ["suresh", "సురేష్", "सुरेश"],
+  child_anita: ["anita", "అనిత", "అనితా", "अनिता"],
+  child_ramesh: ["ramesh", "రమేష్", "रमेश"],
+  child_bhavani: ["bhavani", "భవాని", "भवानी"],
+  child_gopi: ["gopi", "గోపి", "గోపీ", "गोपी"],
+  child_durga: ["durga", "దుర్గ", "దుర్గా", "दुर्गा"],
+  child_shiva: ["shiva", "శివ", "शिव", "शिवा"],
+  child_radha: ["radha", "రాధ", "రాధా", "राधा"],
+  child_mahesh: ["mahesh", "మహేష్", "महेश"],
+  child_anji: ["anji", "అంజి", "अंजी"],
+  child_venkatesh: ["venkatesh", "వెంకటేష్", "वेंकटेश"],
+  child_swapna: ["swapna", "స్వప్న", "स्वप्ना"]
+};
+
 function parseVoiceObservation(spokenText, existingChildren = []) {
   const clean = (spokenText || "").trim();
   const lower = clean.toLowerCase();
 
-  // 1. Match against existing children first (exact or Levenshtein <= 2)
+  // 1. Match against existing children first (English, Telugu, Hindi aliases + Levenshtein <= 2)
   let matchedChild = null;
   const tokens = lower.split(/[\s,.\-]+/).filter(Boolean);
   for (const child of existingChildren) {
     const cname = child.name.toLowerCase();
-    if (lower.includes(cname)) {
+    const aliases = CHILD_NAME_ALIASES[child.id] || [cname];
+    if (aliases.some((alias) => lower.includes(alias))) {
       matchedChild = child;
       break;
     }

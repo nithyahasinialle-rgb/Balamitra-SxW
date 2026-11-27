@@ -66,7 +66,19 @@ const STRINGS = {
     skipActivity: "Skip",
     explainParent: "Explain to Parent",
     timelineTitle: "Longitudinal Observation Timeline",
-    poshanBtn: "View & Export Poshan Tracker CSV"
+    poshanBtn: "View & Export Poshan Tracker CSV",
+    voiceIntakeTitle: "Voice-First Indic Intake",
+    voiceIntakeSub: "Speak in Telugu, Hindi, or English. On-device NLP extracts child, weight, meal & milestones.",
+    tapMicPrompt: "Tap microphone to speak",
+    listeningPrompt: "Listening... Speak now",
+    extractBtn: "Extract Structured Child Record",
+    extractedTitle: "Extracted Structured Record",
+    saveRegBtn: "Save to Anganwadi Register",
+    childProfileLbl: "Child Profile:",
+    weightLbl: "Weight (kg):",
+    heightLbl: "Height (cm):",
+    mealLbl: "Nutrition / Meal:",
+    devObsLbl: "Developmental Observation:"
   },
   te: {
     appTitle: "బాలమిత్ర",
@@ -102,7 +114,19 @@ const STRINGS = {
     skipActivity: "దాటవేయి",
     explainParent: "తల్లిదండ్రులకు వివరించు",
     timelineTitle: "దీర్ఘకాలిక పరిశీలనల టైమ్‌లైన్",
-    poshanBtn: "పోషణ్ ట్రాకర్ CSV ఎగుమతి"
+    poshanBtn: "పోషణ్ ట్రాకర్ CSV ఎగుమతి",
+    voiceIntakeTitle: "వాయిస్ ద్వారా పిల్లల పరిశీలన నమోదు",
+    voiceIntakeSub: "తెలుగు, హిందీ లేదా ఇంగ్లీషులో మాట్లాడండి. పేరు, బరువు, భోజనం మరియు వికాసం స్వయంచాలకంగా నమోదవుతాయి.",
+    tapMicPrompt: "మాట్లాడటానికి మైక్ నొక్కండి",
+    listeningPrompt: "వింటోంది... ఇప్పుడు మాట్లాడండి",
+    extractBtn: "వివరాలను విశ్లేషించు",
+    extractedTitle: "గుర్తించబడిన రికార్డు వివరాలు",
+    saveRegBtn: "అంగన్‌వాడీ రిజిస్టర్‌లో సేవ్ చేయి",
+    childProfileLbl: "పిల్లవాడి ప్రొఫైల్:",
+    weightLbl: "బరువు (కిలోలు):",
+    heightLbl: "ఎత్తు (సెం.మీ):",
+    mealLbl: "పోషకాహారం / భోజనం:",
+    devObsLbl: "వికాస పరిశీలన:"
   },
   hi: {
     appTitle: "बालमित्र",
@@ -138,12 +162,25 @@ const STRINGS = {
     skipActivity: "छोड़ें",
     explainParent: "माता-पिता को समझाएं",
     timelineTitle: "दीर्घकालिक अवलोकन समयरेखा",
-    poshanBtn: "पोषण ट्रैकर CSV निर्यात करें"
+    poshanBtn: "पोषण ट्रैकर CSV निर्यात करें",
+    voiceIntakeTitle: "वॉयस-फर्स्ट अवलोकन दर्ज करें",
+    voiceIntakeSub: "हिंदी, तेलुगु या अंग्रेजी में बोलें। नाम, वजन, भोजन और विकास स्वतः निकल आते हैं।",
+    tapMicPrompt: "बोलने के लिए माइक दबाएं",
+    listeningPrompt: "सुन रहा है... अभी बोलें",
+    extractBtn: "विवरण निकालें",
+    extractedTitle: "निकाला गया संरचित रिकॉर्ड",
+    saveRegBtn: "आंगनवाड़ी रजिस्टर में सहेजें",
+    childProfileLbl: "बच्चे की प्रोफ़ाइल:",
+    weightLbl: "वजन (किग्रा):",
+    heightLbl: "ऊंचाई (सेमी):",
+    mealLbl: "पोषण / भोजन:",
+    devObsLbl: "विकास अवलोकन:"
   }
 };
 
 const appState = {
   lang: "en",
+  voiceLang: "en-IN",
   fontScale: 0, // 0: Normal, 1: Large, 2: XL
   tab: "today",
   children: [],
@@ -340,16 +377,14 @@ function renderObserveTab() {
   const speechSupported = Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
   return `
     <div class="card" style="text-align:center;">
-      <div style="font-weight:800;font-size:15px;">Voice-First Indic Intake</div>
-      <p style="font-size:11.5px;color:var(--muted);margin-top:4px;">
-        Speak in Telugu, Hindi, or English. On-device NLP extracts child, weight, meal & milestones.
-      </p>
+      <div style="font-weight:800;font-size:15px;">${t("voiceIntakeTitle")}</div>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:4px;">${t("voiceIntakeSub")}</p>
 
       <div style="margin-top:10px;display:flex;justify-content:center;">
         <select id="voice-lang-select" class="select" style="width:auto;padding:6px 12px;font-size:12px;">
-          <option value="en-IN" ${appState.lang === "en" ? "selected" : ""}>English (en-IN)</option>
-          <option value="te-IN" ${appState.lang === "te" ? "selected" : ""}>తెలుగు (te-IN)</option>
-          <option value="hi-IN" ${appState.lang === "hi" ? "selected" : ""}>हिन्दी (hi-IN)</option>
+          <option value="en-IN" ${appState.voiceLang === "en-IN" ? "selected" : ""}>English (en-IN)</option>
+          <option value="te-IN" ${appState.voiceLang === "te-IN" ? "selected" : ""}>తెలుగు (te-IN)</option>
+          <option value="hi-IN" ${appState.voiceLang === "hi-IN" ? "selected" : ""}>हिन्दी (hi-IN)</option>
         </select>
       </div>
 
@@ -357,31 +392,31 @@ function renderObserveTab() {
         ${appState.isListening ? svg("stop", 28) : svg("mic", 28)}
       </button>
       <div style="font-size:11.5px;font-weight:700;color:${appState.isListening ? "var(--red)" : "var(--muted)"};">
-        ${appState.isListening ? "Listening... Speak now" : speechSupported ? "Tap microphone to speak" : "Browser mic unavailable — use samples or type below"}
+        ${appState.isListening ? t("listeningPrompt") : speechSupported ? t("tapMicPrompt") : "Web Speech API unsupported in this browser — type or use samples below"}
       </div>
 
       <div style="margin-top:14px;text-align:left;">
         <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;">1-Tap Voice Samples:</div>
         <div class="chip-row">
-          <button class="chip sample-voice-btn" data-text="Raju weight is 9.8 kg, height 76 cm. He ate rice, dal and boiled egg today and identified yellow cup.">English Sample</button>
-          <button class="chip sample-voice-btn" data-text="శివ బరువు 15.8 కిలోలు. అన్నం, పప్పు తిన్నాడు. మాటలు పలకడానికి చిత్రపటాల సహాయం అవసరమైంది.">తెలుగు Sample</button>
-          <button class="chip sample-voice-btn" data-text="राधा का वजन 12.6 किलो है। उसने रागी दलिया और अंडा खाया। बैठकर मिट्टी दबाने का खेल किया।">हिन्दी Sample</button>
+          <button class="chip sample-voice-btn" data-vlang="en-IN" data-text="Raju weight is 9.8 kg, height 76 cm. He ate rice, dal and boiled egg today and identified yellow cup.">English Sample</button>
+          <button class="chip sample-voice-btn" data-vlang="te-IN" data-text="శివ బరువు 15.8 కిలోలు. అన్నం, పప్పు తిన్నాడు. మాటలు పలకడానికి చిత్రపటాల సహాయం అవసరమైంది.">తెలుగు Sample</button>
+          <button class="chip sample-voice-btn" data-vlang="hi-IN" data-text="राधा का वजन 12.6 किलो है। उसने रागी दलिया और अंडा खाया। बैठकर मिट्टी दबाने का खेल किया।">हिन्दी Sample</button>
         </div>
       </div>
 
       <textarea id="voice-transcript-box" class="textarea" rows="3" style="margin-top:10px;" placeholder="Spoken transcript appears here...">${appState.voiceTranscript}</textarea>
-      <button class="btn btn-dark" id="btn-parse-voice" style="width:100%;margin-top:8px;">Extract Structured Child Record</button>
+      <button class="btn btn-dark" id="btn-parse-voice" style="width:100%;margin-top:8px;">${t("extractBtn")}</button>
     </div>
 
     ${p ? `
       <div class="card card-green">
         <div class="row-between">
-          <strong class="row-center" style="font-size:13.5px;color:var(--green);">${svg("check", 15)} Extracted Structured Record</strong>
+          <strong class="row-center" style="font-size:13.5px;color:var(--green);">${svg("check", 15)} ${t("extractedTitle")}</strong>
           <span class="badge badge-blue">${p.domain}</span>
         </div>
         <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;font-size:12px;">
           <div>
-            <label style="font-weight:700;">Child Profile:</label>
+            <label style="font-weight:700;">${t("childProfileLbl")}</label>
             <select id="ext-child-id" class="select" style="margin-top:3px;">
               <option value="">+ Enroll New Child (${p.extractedName || "Unnamed"})</option>
               ${appState.children.map((c) => `<option value="${c.id}" ${p.matchedChildId === c.id ? "selected" : ""}>${c.name} (${c.ageYears}y • ${c.enrollmentId})</option>`).join("")}
@@ -389,23 +424,23 @@ function renderObserveTab() {
           </div>
           <div class="grid-2">
             <div>
-              <label style="font-weight:700;">Weight (kg):</label>
+              <label style="font-weight:700;">${t("weightLbl")}</label>
               <input id="ext-weight" class="input" type="number" step="0.1" value="${p.weightKg || ""}" placeholder="e.g. 12.8" />
             </div>
             <div>
-              <label style="font-weight:700;">Height (cm):</label>
+              <label style="font-weight:700;">${t("heightLbl")}</label>
               <input id="ext-height" class="input" type="number" step="0.1" value="${p.heightCm || ""}" placeholder="e.g. 92.0" />
             </div>
           </div>
           <div>
-            <label style="font-weight:700;">Nutrition / Meal:</label>
+            <label style="font-weight:700;">${t("mealLbl")}</label>
             <input id="ext-meal" class="input" value="${p.mealDetails || ""}" placeholder="e.g. Rice, dal, egg" />
           </div>
           <div>
-            <label style="font-weight:700;">Developmental Observation:</label>
+            <label style="font-weight:700;">${t("devObsLbl")}</label>
             <input id="ext-obs" class="input" value="${p.observationSummary || ""}" />
           </div>
-          <button class="btn btn-green" id="btn-save-observation">${svg("check", 14)} Save to Anganwadi Register</button>
+          <button class="btn btn-green" id="btn-save-observation">${svg("check", 14)} ${t("saveRegBtn")}</button>
         </div>
       </div>
     ` : ""}
@@ -416,8 +451,14 @@ function bindObserveEvents() {
   const box = document.getElementById("voice-transcript-box");
   box.oninput = (e) => { appState.voiceTranscript = e.target.value; };
 
+  const langSelect = document.getElementById("voice-lang-select");
+  langSelect.onchange = (e) => {
+    appState.voiceLang = e.target.value;
+  };
+
   document.querySelectorAll(".sample-voice-btn").forEach((btn) => {
     btn.onclick = async () => {
+      if (btn.dataset.vlang) appState.voiceLang = btn.dataset.vlang;
       appState.voiceTranscript = btn.dataset.text;
       box.value = appState.voiceTranscript;
       await parseCurrentTranscript();
@@ -434,65 +475,22 @@ function bindObserveEvents() {
         try { activeRecognition.stop(); } catch (_) {}
         activeRecognition = null;
       }
-      if (activeMediaRecorder && activeMediaRecorder.state !== "inactive") {
-        activeMediaRecorder.stop();
-      }
-      if (activeAudioStream) {
-        activeAudioStream.getTracks().forEach((tr) => tr.stop());
-        activeAudioStream = null;
-      }
       render();
       return;
     }
 
     const selectedLang = document.getElementById("voice-lang-select").value;
-
-    // Step 1: Request hardware mic permission via getUserMedia first (works on localhost)
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      try {
-        activeAudioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      } catch (permErr) {
-        showToast("Microphone permission blocked — allow mic in browser bar or use a 1-tap sample.");
-        return;
-      }
-    }
-
-    const startLocalAudioFallback = () => {
-      if (!activeAudioStream || typeof MediaRecorder === "undefined") {
-        showToast("Live speech service unavailable — tap a 1-tap voice sample below.");
-        return;
-      }
-      appState.isListening = true;
-      const chunks = [];
-      activeMediaRecorder = new MediaRecorder(activeAudioStream);
-      activeMediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
-      activeMediaRecorder.onstop = async () => {
-        appState.isListening = false;
-        if (activeAudioStream) {
-          activeAudioStream.getTracks().forEach((tr) => tr.stop());
-          activeAudioStream = null;
-        }
-        // Populate localized demo transcript if browser cloud ASR is blocked (e.g. Brave / offline)
-        if (!appState.voiceTranscript.trim()) {
-          appState.voiceTranscript = selectedLang.startsWith("te")
-            ? "శివ బరువు 15.8 కిలోలు. అన్నం, పప్పు తిన్నాడు. మాటలు పలకడానికి చిత్రపటాల సహాయం అవసరమైంది."
-            : selectedLang.startsWith("hi")
-              ? "राधा का वजन 12.6 किलो है। उसने रागी दलिया और अंडा खाया। बैठकर मिट्टी दबाने का खेल किया।"
-              : "Raju weight is 9.8 kg, height 76 cm. He ate rice, dal and boiled egg today and identified yellow cup.";
-        }
-        showToast("Captured audio locally — extracting structured record...");
-        await parseCurrentTranscript();
-      };
-      activeMediaRecorder.start();
-      showToast("Recording live mic locally — tap mic button again when done.");
-      render();
-    };
+    appState.voiceLang = selectedLang;
 
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRec) {
-      startLocalAudioFallback();
+      showToast("Live speech recognition requires Chrome or Edge — type or tap a sample below.");
       return;
     }
+
+    // Clear previous transcript so fresh speech is captured cleanly
+    appState.voiceTranscript = "";
+    appState.parsedVoice = null;
 
     const rec = new SpeechRec();
     activeRecognition = rec;
@@ -504,45 +502,46 @@ function bindObserveEvents() {
 
     rec.onresult = (event) => {
       let text = "";
-      for (let i = 0; i < event.results.length; i++) text += event.results[i][0].transcript;
+      for (let i = 0; i < event.results.length; i++) {
+        text += event.results[i][0].transcript;
+      }
       appState.voiceTranscript = text;
       const tb = document.getElementById("voice-transcript-box");
       if (tb) tb.value = text;
     };
     rec.onend = async () => {
-      if (!activeRecognition) return; // Already handled by error fallback
+      if (!activeRecognition) return;
       appState.isListening = false;
       activeRecognition = null;
-      if (activeAudioStream) {
-        activeAudioStream.getTracks().forEach((tr) => tr.stop());
-        activeAudioStream = null;
+      if (appState.voiceTranscript.trim()) {
+        await parseCurrentTranscript();
+      } else {
+        showToast("No speech captured — try speaking clearly or check your mic.");
+        render();
       }
-      if (appState.voiceTranscript.trim()) await parseCurrentTranscript();
-      else render();
     };
     rec.onerror = (event) => {
       const err = event?.error || "unknown";
       activeRecognition = null;
       appState.isListening = false;
-      if (err === "network" || err === "service-not-allowed" || err === "language-not-supported") {
-        // Browser blocked cloud ASR (e.g. Brave or offline) — seamlessly switch to local MediaRecorder
-        startLocalAudioFallback();
-        return;
+      if (err === "not-allowed") {
+        showToast("Microphone permission denied — allow mic access in browser address bar.");
+      } else if (err === "no-speech") {
+        showToast("No speech detected — please speak closer to the microphone.");
+      } else if (err === "network" || err === "service-not-allowed") {
+        showToast("Browser speech service blocked (try Chrome/Edge with internet) or type below.");
+      } else {
+        showToast(`Speech recognition error (${err}) — try Chrome/Edge or type below.`);
       }
-      if (activeAudioStream) {
-        activeAudioStream.getTracks().forEach((tr) => tr.stop());
-        activeAudioStream = null;
-      }
-      if (err === "no-speech") showToast("No speech detected — try speaking closer to mic.");
-      else if (err === "not-allowed") showToast("Microphone permission denied — allow access in browser settings.");
-      else showToast(`Mic error (${err}) — try a 1-tap voice sample.`);
       render();
     };
     try {
       rec.start();
-    } catch (_) {
+    } catch (e) {
       activeRecognition = null;
-      startLocalAudioFallback();
+      appState.isListening = false;
+      showToast("Could not start microphone — check browser permissions.");
+      render();
     }
   };
 
@@ -1253,7 +1252,11 @@ function openTourModal() {
 
 // Global header & nav bindings
 document.querySelectorAll(".lang-btn").forEach((btn) => {
-  btn.onclick = () => { appState.lang = btn.dataset.lang; fetchState(); };
+  btn.onclick = () => {
+    appState.lang = btn.dataset.lang;
+    appState.voiceLang = btn.dataset.lang === "te" ? "te-IN" : btn.dataset.lang === "hi" ? "hi-IN" : "en-IN";
+    fetchState();
+  };
 });
 
 document.querySelectorAll(".nav-btn").forEach((btn) => {
