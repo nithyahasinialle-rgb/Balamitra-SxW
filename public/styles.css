@@ -39,8 +39,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body.scale-lg { font-size: 16px; }
-body.scale-xl { font-size: 18px; }
+body.scale-lg .main-content, body.scale-lg .modal-card { zoom: 1.12; }
+body.scale-xl .main-content, body.scale-xl .modal-card { zoom: 1.24; }
 
 .app-shell {
   max-width: 480px;
