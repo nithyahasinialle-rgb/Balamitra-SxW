@@ -15,7 +15,7 @@ docker compose up --build
 Then open **http://localhost:3000** in your browser.
 
 ### Optional Environment Variables
-See `.env.example` for optional external keys (`BHASHINI_API_KEY`, `GEMINI_API_KEY`). The application runs 100% locally without any keys and displays `"key not set"` on optional cloud status indicators.
+See `.env.example` for optional Indic ASR fallback key (`BHASHINI_API_KEY`). The application runs 100% locally without any keys and displays `"key not set"` if unconfigured.
 
 ---
 

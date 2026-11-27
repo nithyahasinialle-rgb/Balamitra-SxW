@@ -117,8 +117,7 @@ app.get("/api/health", (req, res) => {
     status: "ok",
     app: "Balamitra Anganwadi Co-Pilot",
     mode: "100% On-Device Edge Ready",
-    bhashiniKeyStatus: process.env.BHASHINI_API_KEY ? "configured" : "key not set",
-    geminiKeyStatus: process.env.GEMINI_API_KEY ? "configured" : "key not set"
+    bhashiniKeyStatus: process.env.BHASHINI_API_KEY ? "configured" : "key not set"
   });
 });
 
