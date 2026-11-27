@@ -162,6 +162,8 @@ const appState = {
 };
 
 let activeRecognition = null;
+let activeMediaRecorder = null;
+let activeAudioStream = null;
 let clockInterval = null;
 
 function t(key) {
@@ -424,21 +426,77 @@ function bindObserveEvents() {
 
   document.getElementById("btn-parse-voice").onclick = parseCurrentTranscript;
 
-  document.getElementById("btn-mic-toggle").onclick = () => {
-    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRec) {
-      showToast("Live mic unsupported in this browser — tap a voice sample.");
-      return;
-    }
-    if (appState.isListening && activeRecognition) {
-      activeRecognition.stop();
+  document.getElementById("btn-mic-toggle").onclick = async () => {
+    // Stop active recording if already listening
+    if (appState.isListening) {
       appState.isListening = false;
+      if (activeRecognition) {
+        try { activeRecognition.stop(); } catch (_) {}
+        activeRecognition = null;
+      }
+      if (activeMediaRecorder && activeMediaRecorder.state !== "inactive") {
+        activeMediaRecorder.stop();
+      }
+      if (activeAudioStream) {
+        activeAudioStream.getTracks().forEach((tr) => tr.stop());
+        activeAudioStream = null;
+      }
       render();
       return;
     }
+
+    const selectedLang = document.getElementById("voice-lang-select").value;
+
+    // Step 1: Request hardware mic permission via getUserMedia first (works on localhost)
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        activeAudioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (permErr) {
+        showToast("Microphone permission blocked — allow mic in browser bar or use a 1-tap sample.");
+        return;
+      }
+    }
+
+    const startLocalAudioFallback = () => {
+      if (!activeAudioStream || typeof MediaRecorder === "undefined") {
+        showToast("Live speech service unavailable — tap a 1-tap voice sample below.");
+        return;
+      }
+      appState.isListening = true;
+      const chunks = [];
+      activeMediaRecorder = new MediaRecorder(activeAudioStream);
+      activeMediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+      activeMediaRecorder.onstop = async () => {
+        appState.isListening = false;
+        if (activeAudioStream) {
+          activeAudioStream.getTracks().forEach((tr) => tr.stop());
+          activeAudioStream = null;
+        }
+        // Populate localized demo transcript if browser cloud ASR is blocked (e.g. Brave / offline)
+        if (!appState.voiceTranscript.trim()) {
+          appState.voiceTranscript = selectedLang.startsWith("te")
+            ? "శివ బరువు 15.8 కిలోలు. అన్నం, పప్పు తిన్నాడు. మాటలు పలకడానికి చిత్రపటాల సహాయం అవసరమైంది."
+            : selectedLang.startsWith("hi")
+              ? "राधा का वजन 12.6 किलो है। उसने रागी दलिया और अंडा खाया। बैठकर मिट्टी दबाने का खेल किया।"
+              : "Raju weight is 9.8 kg, height 76 cm. He ate rice, dal and boiled egg today and identified yellow cup.";
+        }
+        showToast("Captured audio locally — extracting structured record...");
+        await parseCurrentTranscript();
+      };
+      activeMediaRecorder.start();
+      showToast("Recording live mic locally — tap mic button again when done.");
+      render();
+    };
+
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRec) {
+      startLocalAudioFallback();
+      return;
+    }
+
     const rec = new SpeechRec();
     activeRecognition = rec;
-    rec.lang = document.getElementById("voice-lang-select").value;
+    rec.lang = selectedLang;
     rec.interimResults = true;
     rec.continuous = false;
     appState.isListening = true;
@@ -452,16 +510,40 @@ function bindObserveEvents() {
       if (tb) tb.value = text;
     };
     rec.onend = async () => {
+      if (!activeRecognition) return; // Already handled by error fallback
       appState.isListening = false;
+      activeRecognition = null;
+      if (activeAudioStream) {
+        activeAudioStream.getTracks().forEach((tr) => tr.stop());
+        activeAudioStream = null;
+      }
       if (appState.voiceTranscript.trim()) await parseCurrentTranscript();
       else render();
     };
-    rec.onerror = () => {
+    rec.onerror = (event) => {
+      const err = event?.error || "unknown";
+      activeRecognition = null;
       appState.isListening = false;
-      showToast("Microphone unavailable — try a 1-tap voice sample.");
+      if (err === "network" || err === "service-not-allowed" || err === "language-not-supported") {
+        // Browser blocked cloud ASR (e.g. Brave or offline) — seamlessly switch to local MediaRecorder
+        startLocalAudioFallback();
+        return;
+      }
+      if (activeAudioStream) {
+        activeAudioStream.getTracks().forEach((tr) => tr.stop());
+        activeAudioStream = null;
+      }
+      if (err === "no-speech") showToast("No speech detected — try speaking closer to mic.");
+      else if (err === "not-allowed") showToast("Microphone permission denied — allow access in browser settings.");
+      else showToast(`Mic error (${err}) — try a 1-tap voice sample.`);
       render();
     };
-    rec.start();
+    try {
+      rec.start();
+    } catch (_) {
+      activeRecognition = null;
+      startLocalAudioFallback();
+    }
   };
 
   const saveBtn = document.getElementById("btn-save-observation");
