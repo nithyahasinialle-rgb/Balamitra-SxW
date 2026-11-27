@@ -1028,55 +1028,153 @@ function openAddChildModal() {
 }
 
 function openTourModal() {
-  const steps = [
-    {
-      title: "1. Hands-Free Indic Voice Intake",
-      badge: "15-Sec Voice vs 5-Min Paper Ledger",
-      desc: "Anganwadi workers speak naturally in Telugu, Hindi, or English. On-device NLP extracts child name, weight, and meals with zero cloud dependency.",
-      actionText: "Try Voice Intake Tab",
-      action: () => { appState.tab = "observe"; closeModal(); render(); }
-    },
-    {
-      title: "2. Longitudinal Growth Intelligence",
-      badge: "WHO LMS Formulation Engine",
-      desc: "Links weight dips, illness episodes, and classroom fatigue across weeks to spot subtle growth plateauing before malnutrition becomes severe.",
-      actionText: "Inspect Chitti's Story",
-      action: () => { appState.tab = "children"; appState.selectedChildId = "child_chitti"; closeModal(); render(); }
-    },
-    {
-      title: "3. Age-Tailored ECD & Counseling",
-      badge: "Household Materials • Worker Authority",
-      desc: "Suggests developmental activities using cups, spoons, and pebbles with worker override controls and empathetic parent counseling scripts.",
-      actionText: "View Today's Priorities",
-      action: () => { appState.tab = "today"; closeModal(); render(); }
-    },
-    {
-      title: "4. Synchronized Real-Time Attendance",
-      badge: "Live Calendar • 15 Rural Children",
-      desc: "Real-time calendar synchronization with interactive daily attendance marking linked directly to THR and HCM meal distribution.",
-      actionText: "Open Attendance Register",
-      action: () => { closeModal(); openAttendanceModal(); }
-    },
-    {
-      title: "5. National Poshan Tracker Export",
-      badge: "MoWCD / ICDS Compliant CSV",
-      desc: "Eliminates double data entry by generating official Ministry of Women & Child Development CSV registers pre-populated with WHO categories.",
-      actionText: "View Poshan Tracker CSV",
-      action: () => { closeModal(); openPoshanModal(); }
-    },
-    {
-      title: "6. Inclusive ECD & Speech Therapy Screener",
-      badge: "RBSK / DEIC Protocols & Adaptive Diets",
-      desc: "Tailored activities and adaptive diets for disabled children (Shiva, Radha, Mahesh) plus an official RBSK/DEIC speech therapy early screener.",
-      actionText: "View Shiva (Speech Support)",
-      action: () => { appState.tab = "children"; appState.selectedChildId = "child_shiva"; appState.speechExpanded = true; closeModal(); render(); }
-    }
-  ];
+  const L = appState.lang;
+  const ui = {
+    te: { header: "మూల్యాంకన టూర్", back: "వెనుకకు", next: "తదుపరి దశ", finish: "టూర్ ముగించు" },
+    hi: { header: "मूल्यांकनकर्ता टूर", back: "पीछे", next: "अगला चरण", finish: "टूर समाप्त" },
+    en: { header: "Evaluator Tour", back: "Back", next: "Next Step", finish: "Finish Tour" }
+  }[L] || { header: "Evaluator Tour", back: "Back", next: "Next Step", finish: "Finish Tour" };
 
+  const localizedSteps = {
+    te: [
+      {
+        title: "1. హ్యాండ్స్-ఫ్రీ వాయిస్ రికార్డింగ్",
+        badge: "15 సెకన్ల వాయిస్ vs 5 నిమిషాల లెడ్జర్",
+        desc: "అంగన్‌వాడీ కార్యకర్తలు తెలుగు, హిందీ లేదా ఇంగ్లీషులో సహజంగా మాట్లాడవచ్చు. ఆన్-డివైస్ NLP పిల్లల పేరు, బరువు, భోజనాన్ని వెంటనే విశ్లేషిస్తుంది.",
+        actionText: "వాయిస్ పరిశీలన ట్యాబ్‌ను చూడండి",
+        action: () => { appState.tab = "observe"; closeModal(); render(); }
+      },
+      {
+        title: "2. దీర్ఘకాలిక శారీరక ఎదుగుదల విశ్లేషణ",
+        badge: "WHO LMS ప్రమాణాల ఆధారితం",
+        desc: "కేవలం ఒక్కరోజు బరువుతో కాకుండా, వారాల తరబడి మార్పులను గమనిస్తుంది. తీవ్ర పోషకాహార లోపం రాకముందే నివారణ మార్గాలను చూపుతుంది.",
+        actionText: "చిట్టి ప్రొఫైల్‌ను పరిశీలించండి",
+        action: () => { appState.tab = "children"; appState.selectedChildId = "child_chitti"; closeModal(); render(); }
+      },
+      {
+        title: "3. వయస్సుకు తగిన ఆటలు & తల్లులకు కౌన్సెలింగ్",
+        badge: "ఇంటి వస్తువులు • కార్యకర్త అధికారం",
+        desc: "ఇంటి వద్ద లభించే కప్పులు, గింజలు, గులకరాళ్లతో సులభంగా ఆడే ఆటలను సూచిస్తుంది. తల్లులకు ధైర్యం చెప్పే సులభమైన వివరణలు అందిస్తుంది.",
+        actionText: "నేటి ప్రాధాన్యతలను చూడండి",
+        action: () => { appState.tab = "today"; closeModal(); render(); }
+      },
+      {
+        title: "4. లైవ్ క్యాలెండర్ హాజరు సమకాలీకరణ",
+        badge: "ఖచ్చితమైన తేదీ • 15 మంది పిల్లలు",
+        desc: "నేటి తేదీకి సరిపోయే లైవ్ క్యాలెండర్. 15 మంది పిల్లల హాజరును (THR & HCM పోషణతో పాటు) ఒకే ట్యాప్‌తో సులభంగా నమోదు చేసుకోవచ్చు.",
+        actionText: "హాజరు పట్టికను తెరవండి",
+        action: () => { closeModal(); openAttendanceModal(); }
+      },
+      {
+        title: "5. జాతీయ పోషణ్ ట్రాకర్ CSV ఎగుమతి",
+        badge: "MoWCD / ICDS అధికారిక రిజిస్టర్",
+        desc: "రెండుసార్లు డేటా ఎంట్రీ చేసే శ్రమను తొలగిస్తుంది. కేంద్ర ప్రభుత్వం ఆమోదించిన పోషణ్ ట్రాకర్ ఫార్మాట్‌లో CSV ఫైల్‌ను తక్షణమే తయారుచేస్తుంది.",
+        actionText: "పోషణ్ ట్రాకర్ CSV ని చూడండి",
+        action: () => { closeModal(); openPoshanModal(); }
+      },
+      {
+        title: "6. సమ్మిళిత బాలల వికాసం & స్పీచ్ థెరపీ",
+        badge: "RBSK / DEIC ముందస్తు గుర్తింపు & ఆహార విధానాలు",
+        desc: "దివ్యాంగ పిల్లల (శివ, రాధ, మహేష్) అవసరాలకు తగిన ప్రత్యేక ఆటలు, అనుకూల ఆహార ప్రణాళికలు మరియు స్పీచ్ థెరపీ హెచ్చరిక సంకేతాలను అందిస్తుంది.",
+        actionText: "శివ ప్రొఫైల్‌ను చూడండి",
+        action: () => { appState.tab = "children"; appState.selectedChildId = "child_shiva"; appState.speechExpanded = true; closeModal(); render(); }
+      }
+    ],
+    hi: [
+      {
+        title: "1. हैंड्स-फ्री इंडिक वॉयस इनटेक",
+        badge: "15-सेकंड वॉयस vs 5-मिनट रजिस्टर",
+        desc: "आंगनवाड़ी कार्यकर्ता स्वाभाविक रूप से हिंदी, तेलुगु या अंग्रेजी में बोल सकती हैं। ऑन-डिवाइस NLP बिना इंटरनेट के नाम, वजन और भोजन रिकॉर्ड करता है।",
+        actionText: "वॉयस अवलोकन आज़माएं",
+        action: () => { appState.tab = "observe"; closeModal(); render(); }
+      },
+      {
+        title: "2. दीर्घकालिक विकास विश्लेषण",
+        badge: "WHO LMS मानक इंजन",
+        desc: "बालमित्र हफ्तों के पैटर्न को जोड़ता है। कुपोषण गंभीर होने से पहले ही मामूली रुकावटों को पहचान लेता है।",
+        actionText: "चिट्टी की प्रोफ़ाइल देखें",
+        action: () => { appState.tab = "children"; appState.selectedChildId = "child_chitti"; closeModal(); render(); }
+      },
+      {
+        title: "3. आयु-अनुकूल खेल और परामर्श",
+        badge: "घरेलू सामग्री • कार्यकर्ता नियंत्रण",
+        desc: "घर की सरल वस्तुओं (कप, बीज, पत्ते) से विकासात्मक गतिविधियां सुझाता है और ग्रामीण माताओं को सशक्त बनाने वाले परामर्श संदेश देता है।",
+        actionText: "आज की प्राथमिकता देखें",
+        action: () => { appState.tab = "today"; closeModal(); render(); }
+      },
+      {
+        title: "4. लाइव कैलेंडर उपस्थिति ट्रैकिंग",
+        badge: "वास्तविक समय • 15 ग्रामीण बच्चे",
+        desc: "सप्ताह के वास्तविक दिन के साथ सिंक, 15 बच्चों और THR/HCM पोषण विवरण के साथ इंटरैक्टिव उपस्थिति रजिस्टर।",
+        actionText: "उपस्थिति रजिस्टर खोलें",
+        action: () => { closeModal(); openAttendanceModal(); }
+      },
+      {
+        title: "5. राष्ट्रीय पोषण ट्रैकर CSV एक्सपोर्ट",
+        badge: "MoWCD / ICDS आधिकारिक प्रारूप",
+        desc: "दोहरी डेटा प्रविष्टि को समाप्त करता है। आधिकारिक महिला एवं बाल विकास मंत्रालय के प्रारूप में WHO विकास श्रेणियों के साथ CSV बनाता है।",
+        actionText: "पोषण ट्रैकर CSV देखें",
+        action: () => { closeModal(); openPoshanModal(); }
+      },
+      {
+        title: "6. समावेशी बाल विकास एवं स्पीच थेरेपी",
+        badge: "RBSK / DEIC प्रोटोकॉल व अनुकूली पोषण",
+        desc: "विशेष आवश्यकता वाले बच्चों (शिव, राधा, महेश) के लिए अनुकूलित गतिविधियां, सुपाच्य आहार योजनाएं और स्पीच थेरेपी रेफरल के दिशा-निर्देश।",
+        actionText: "शिव की प्रोफ़ाइल देखें",
+        action: () => { appState.tab = "children"; appState.selectedChildId = "child_shiva"; appState.speechExpanded = true; closeModal(); render(); }
+      }
+    ],
+    en: [
+      {
+        title: "1. Hands-Free Indic Voice Intake",
+        badge: "15-Sec Voice vs 5-Min Paper Ledger",
+        desc: "Anganwadi workers speak naturally in Telugu, Hindi, or English. On-device NLP extracts child name, weight, and meals with zero cloud dependency.",
+        actionText: "Try Voice Intake Tab",
+        action: () => { appState.tab = "observe"; closeModal(); render(); }
+      },
+      {
+        title: "2. Longitudinal Growth Intelligence",
+        badge: "WHO LMS Formulation Engine",
+        desc: "Links weight dips, illness episodes, and classroom fatigue across weeks to spot subtle growth plateauing before malnutrition becomes severe.",
+        actionText: "Inspect Chitti's Story",
+        action: () => { appState.tab = "children"; appState.selectedChildId = "child_chitti"; closeModal(); render(); }
+      },
+      {
+        title: "3. Age-Tailored ECD & Counseling",
+        badge: "Household Materials • Worker Authority",
+        desc: "Suggests developmental activities using cups, spoons, and pebbles with worker override controls and empathetic parent counseling scripts.",
+        actionText: "View Today's Priorities",
+        action: () => { appState.tab = "today"; closeModal(); render(); }
+      },
+      {
+        title: "4. Synchronized Real-Time Attendance",
+        badge: "Live Calendar • 15 Rural Children",
+        desc: "Real-time calendar synchronization with interactive daily attendance marking linked directly to THR and HCM meal distribution.",
+        actionText: "Open Attendance Register",
+        action: () => { closeModal(); openAttendanceModal(); }
+      },
+      {
+        title: "5. National Poshan Tracker Export",
+        badge: "MoWCD / ICDS Compliant CSV",
+        desc: "Eliminates double data entry by generating official Ministry of Women & Child Development CSV registers pre-populated with WHO categories.",
+        actionText: "View Poshan Tracker CSV",
+        action: () => { closeModal(); openPoshanModal(); }
+      },
+      {
+        title: "6. Inclusive ECD & Speech Therapy Screener",
+        badge: "RBSK / DEIC Protocols & Adaptive Diets",
+        desc: "Tailored activities and adaptive diets for disabled children (Shiva, Radha, Mahesh) plus an official RBSK/DEIC speech therapy early screener.",
+        actionText: "View Shiva (Speech Support)",
+        action: () => { appState.tab = "children"; appState.selectedChildId = "child_shiva"; appState.speechExpanded = true; closeModal(); render(); }
+      }
+    ]
+  };
+
+  const steps = localizedSteps[L] || localizedSteps.en;
   const step = steps[appState.tourStep - 1] || steps[0];
   openModal(`
     <div class="row-between">
-      <strong class="row-center" style="font-size:14px;">${svg("sparkles", 15)} Evaluator Tour (${appState.tourStep}/${steps.length})</strong>
+      <strong class="row-center" style="font-size:14px;">${svg("sparkles", 15)} ${ui.header} (${appState.tourStep}/${steps.length})</strong>
       <button class="btn btn-outline btn-sm" onclick="closeModal()">${svg("x", 14)}</button>
     </div>
     <div class="card card-gold">
@@ -1086,8 +1184,8 @@ function openTourModal() {
     </div>
     <button class="btn btn-primary" id="tour-live-btn">${step.actionText} ${svg("chevronRight", 14)}</button>
     <div class="row-between">
-      <button class="btn btn-outline btn-sm" id="tour-prev" ${appState.tourStep <= 1 ? "disabled" : ""}>Back</button>
-      <button class="btn btn-dark btn-sm" id="tour-next">${appState.tourStep < steps.length ? "Next Step" : "Finish Tour"}</button>
+      <button class="btn btn-outline btn-sm" id="tour-prev" ${appState.tourStep <= 1 ? "disabled" : ""}>${ui.back}</button>
+      <button class="btn btn-dark btn-sm" id="tour-next">${appState.tourStep < steps.length ? ui.next : ui.finish}</button>
     </div>
   `);
   document.getElementById("tour-live-btn").onclick = step.action;
