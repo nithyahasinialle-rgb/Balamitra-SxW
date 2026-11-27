@@ -49,6 +49,37 @@ function enrichChild(child, lang = "en") {
     ? computeWhoZScoreProxy(child.ageYears, latestG.weightKg, latestG.heightCm)
     : { waz: 0, haz: 0, category: "Normal" };
 
+  // Multi-Day Nutrition Intelligence (5-Day Strip + DDS Score)
+  const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+  const daysStrip = dayNames.map((d, idx) => {
+    const nLog = nutritions[idx % Math.max(nutritions.length, 1)];
+    const txt = (nLog?.mealDetails || "Rice, dal").toLowerCase();
+    return {
+      dayLabel: d,
+      foods: (nLog?.mealDetails || "Rice, dal").split(",").map((s) => s.trim()).slice(0, 2),
+      hasProtein: /dal|egg|chana|milk|ragi|పప్పు|గుడ్డు|दाल|अंडा/.test(txt),
+      hasVegetables: /spinach|moringa|palak|greens|veg|ఆకుకూర|पालक/.test(txt),
+      hasFruits: /banana|fruit|అరటి|केला/.test(txt)
+    };
+  });
+  const hasAnyProtein = daysStrip.some((d) => d.hasProtein);
+  const hasAnyVeg = daysStrip.some((d) => d.hasVegetables);
+  const hasAnyFruit = daysStrip.some((d) => d.hasFruits);
+  const ddsScore = 2 + (hasAnyProtein ? 1 : 0) + (hasAnyVeg ? 1 : 0) + (hasAnyFruit ? 1 : 0);
+  const multiDayNutrition = {
+    dietaryDiversityScore: ddsScore,
+    diversityRating: ddsScore >= 4
+      ? (lang === "te" ? "మంచి ఆహార వైవిధ్యం" : lang === "hi" ? "अच्छा आहार विविधता स्कोर" : "Strong Dietary Diversity")
+      : (lang === "te" ? "మధ్యస్థ వైవిధ్యం — ఆకుకూరలు/పండ్లు పెంచండి" : lang === "hi" ? "मध्यम विविधता — हरी सब्ज़ी/फल जोड़ें" : "Moderate Diversity — Add Greens & Fruit"),
+    daysStrip,
+    mainObservation: child.specialNeedsType
+      ? (lang === "te" ? "ప్రత్యేక పోషణ ప్రణాళికతో పాటు 5-రోజుల ఆహార సమతుల్యత ట్రాక్ చేయబడింది." : lang === "hi" ? "विशेष पोषण योजना के साथ 5-दिवसीय आहार पैटर्न ट्रैक किया गया।" : "5-day intake tracked alongside specialized adaptive feeding pattern.")
+      : (lang === "te" ? "గత 5 రోజులలో కార్బోహైడ్రేట్ మరియు ప్రోటీన్ సమతుల్యత పరిశీలించబడింది." : lang === "hi" ? "पिछले 5 दिनों में अनाज व प्रोटीन संतुलन की समीक्षा की गई।" : "5-day longitudinal meal pattern reviewed for protein and micronutrient balance."),
+    actionableSuggestion: ddsScore < 5
+      ? (lang === "te" ? "ఆకుకూర పప్పు (పాలకూర/మునగ) మరియు అరటిపండును వారంలో 3 సార్లు జోడించండి." : lang === "hi" ? "सप्ताह में 3 बार पालक/सहजन दाल और केला शामिल करें।" : "Include drumstick/spinach dal and seasonal banana 3x this week to reach DDS 5/5.")
+      : (lang === "te" ? "అద్భుతమైన పోషకాహార వైవిధ్యం! ఇదే మెనూను కొనసాగించండి." : lang === "hi" ? "उत्कृष्ट आहार विविधता! यही पोषण क्रम जारी रखें।" : "Optimal 5/5 dietary diversity achieved. Sustain current AWC & home meal mix.")
+  };
+
   // Personalized activity routing: prioritize specialNeedsType first
   let matchedActivity = seed.activities.find(
     (a) => child.specialNeedsType && a.specialNeedsTarget === child.specialNeedsType
@@ -68,6 +99,7 @@ function enrichChild(child, lang = "en") {
     trajectoryStatus,
     trajectorySummary,
     whoMetrics,
+    multiDayNutrition,
     connectDots: connectTheDots(child, growths, nutritions, developments, lang),
     whatChanged: getWhatChangedSummary(child, growths, developments, lang),
     speechGuidance: getReferralGuidance(child.ageYears, lang),
@@ -243,6 +275,28 @@ app.post("/api/activity-feedback", (req, res) => {
     activityId,
     decision,
     notes: notes || ""
+  });
+  res.json({ ok: true });
+});
+
+app.post("/api/reobserve", (req, res) => {
+  const { childId, activityTitle, outcome, notes } = req.body || {};
+  if (!childId) return res.status(400).json({ error: "Missing childId" });
+  const now = Date.now();
+  const outcomeLabel =
+    outcome === "COMPLETED_EASILY"
+      ? "Completed Easily"
+      : outcome === "NEEDED_HELP"
+        ? "Needed Gentle Scaffolding"
+        : "Disengaged / Fatigued";
+  db.developmentObservations.push({
+    id: db.developmentObservations.length + 1,
+    childId,
+    timestampEpochMs: now,
+    domain: "COGNITIVE",
+    observationText: `Post-Activity (${activityTitle || "ECD"}): ${outcomeLabel}. ${notes || ""}`.trim(),
+    needsFollowUp: outcome !== "COMPLETED_EASILY",
+    rawWorkerSpeech: notes || null
   });
   res.json({ ok: true });
 });

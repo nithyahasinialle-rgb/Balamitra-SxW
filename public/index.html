@@ -3,51 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Balamitra (బాలమిత్ర) — Voice-First Anganwadi Co-Pilot</title>
+  <title>Balamitra — Voice-First Anganwadi Co-Pilot</title>
+  <link rel="icon" type="image/png" href="/balamitra_logo.png" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <div id="app" class="app-shell">
-    <!-- Top Header -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <div class="logo-badge">B</div>
-        <div>
-          <div class="brand-title" id="ui-app-title">Balamitra • బాలమిత్ర</div>
-          <div class="brand-sub" id="ui-center-sub">Bachupally-1 AWC (3601050201) • Offline-Ready</div>
+    <!-- Curved BrandYellowPrimary HeaderBar matching Android app -->
+    <header class="header-bar">
+      <div class="header-row-1">
+        <div class="header-brand">
+          <img src="/balamitra_logo.png" alt="Balamitra" class="header-logo" />
+          <div>
+            <div class="brand-title" id="ui-app-title">Balamitra</div>
+            <div class="brand-sub" id="ui-center-sub">Bachupally-1 AWC • Code 3601050201</div>
+          </div>
+        </div>
+        <div class="header-tools">
+          <button class="tool-pill" id="btn-font-scale" title="Adjust Text Size">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+            <span id="font-scale-label">A</span>
+          </button>
+          <button class="tool-pill" id="btn-data-monitor" title="Offline & Local Storage Monitor">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 4.17-2.65"/><path d="M10.66 5c4.01-.36 8.14.9 11.34 3.76"/><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"/><path d="M5 13a10 10 0 0 1 5.24-2.76"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            <span>0 KB</span>
+          </button>
+          <button class="tool-pill tool-pill-dark" id="btn-open-tour">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            <span>Tour</span>
+          </button>
         </div>
       </div>
-      <div class="topbar-actions">
+
+      <div class="header-row-2">
+        <div class="worker-chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="ui-worker-name">AWW: Smt. Padmavathi • Medchal Sector</span>
+        </div>
         <div class="lang-pills">
           <button class="lang-btn" data-lang="te">తెలుగు</button>
           <button class="lang-btn" data-lang="hi">हिन्दी</button>
-          <button class="lang-btn active" data-lang="en">English</button>
+          <button class="lang-btn active" data-lang="en">EN</button>
         </div>
-        <button class="btn-tour-pill" id="btn-open-tour">✨ Tour</button>
       </div>
     </header>
 
     <!-- Main Content Area -->
     <main id="main-content" class="main-content">
-      <div class="loading-box">Loading Balamitra Anganwadi Co-Pilot...</div>
+      <div class="loading-box">Initializing Balamitra Workspace...</div>
     </main>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
       <button class="nav-btn active" data-tab="today">
-        <span class="nav-icon">🏠</span>
+        <svg class="nav-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span class="nav-label" id="nav-today">Today</span>
       </button>
       <button class="nav-btn" data-tab="observe">
-        <span class="nav-icon">🎙️</span>
-        <span class="nav-label" id="nav-observe">Voice</span>
+        <svg class="nav-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+        <span class="nav-label" id="nav-observe">Observe</span>
       </button>
       <button class="nav-btn" data-tab="children">
-        <span class="nav-icon">👶</span>
+        <svg class="nav-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         <span class="nav-label" id="nav-children">Children</span>
       </button>
       <button class="nav-btn" data-tab="insights">
-        <span class="nav-icon">📊</span>
+        <svg class="nav-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         <span class="nav-label" id="nav-insights">Insights</span>
       </button>
     </nav>
