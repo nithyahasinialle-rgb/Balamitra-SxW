@@ -6,7 +6,8 @@
 const NUM_WORD_MAP = {
   "ఒకటి": 1, "రెండు": 2, "మూడు": 3, "నాలుగు": 4, "ఐదు": 5, "ఆరు": 6,
   "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
-  "एक": 1, "दो": 2, "तीन": 3, "चार": 4, "पाँच": 5, "पांच": 5, "छह": 6
+  "एक": 1, "दो": 2, "तीन": 3, "चार": 4, "पाँच": 5, "पांच": 5, "छह": 6, "सहा": 6,
+  "ಒಂದು": 1, "ಎರಡು": 2, "ಮೂರು": 3, "ನಾಲ್ಕು": 4, "ಐದು": 5, "ಆರು": 6
 };
 
 function levenshtein(a, b) {
@@ -25,21 +26,21 @@ function levenshtein(a, b) {
 }
 
 const CHILD_NAME_ALIASES = {
-  child_raju: ["raju", "రాజు", "राजू"],
-  child_lakshmi: ["lakshmi", "లక్ష్మి", "లక్ష్మీ", "लक्ष्मी"],
-  child_chitti: ["chitti", "చిట్టి", "चिट्टी"],
-  child_suresh: ["suresh", "సురేష్", "सुरेश"],
-  child_anita: ["anita", "అనిత", "అనితా", "अनिता"],
-  child_ramesh: ["ramesh", "రమేష్", "रमेश"],
-  child_bhavani: ["bhavani", "భవాని", "भवानी"],
-  child_gopi: ["gopi", "గోపి", "గోపీ", "गोपी"],
-  child_durga: ["durga", "దుర్గ", "దుర్గా", "दुर्गा"],
-  child_shiva: ["shiva", "శివ", "शिव", "शिवा"],
-  child_radha: ["radha", "రాధ", "రాధా", "राधा"],
-  child_mahesh: ["mahesh", "మహేష్", "महेश"],
-  child_anji: ["anji", "అంజి", "अंजी"],
-  child_venkatesh: ["venkatesh", "వెంకటేష్", "वेंकटेश"],
-  child_swapna: ["swapna", "స్వప్న", "स्वप्ना"]
+  child_raju: ["raju", "రాజు", "राजू", "ರಾಜು"],
+  child_lakshmi: ["lakshmi", "లక్ష్మి", "లక్ష్మీ", "लक्ष्मी", "ಲಕ್ಷ್ಮಿ"],
+  child_chitti: ["chitti", "చిట్టి", "चिट्टी", "ಚಿಟ್ಟಿ"],
+  child_suresh: ["suresh", "సురేష్", "सुरेश", "ಸುರೇಶ್"],
+  child_anita: ["anita", "అనిత", "అనితా", "अनिता", "ಅನಿತಾ"],
+  child_ramesh: ["ramesh", "రమేష్", "रमेश", "ರಮೇಶ್"],
+  child_bhavani: ["bhavani", "భవాని", "भवानी", "ಭವಾನಿ"],
+  child_gopi: ["gopi", "గోపి", "గోపీ", "गोपी", "ಗೋಪಿ"],
+  child_durga: ["durga", "దుర్గ", "దుర్గా", "दुर्गा", "ದುರ್ಗಾ"],
+  child_shiva: ["shiva", "శివ", "शिव", "शिवा", "ಶಿವ"],
+  child_radha: ["radha", "రాధ", "రాధా", "राधा", "ರಾಧಾ"],
+  child_mahesh: ["mahesh", "మహేష్", "महेश", "ಮಹೇಶ್"],
+  child_anji: ["anji", "అంజి", "अंजी", "ಅಂಜಿ"],
+  child_venkatesh: ["venkatesh", "వెంకటేష్", "वेंकटेश", "ವೆಂಕಟೇಶ್"],
+  child_swapna: ["swapna", "స్వప్న", "स्वप्ना", "ಸ್ವಪ್ನ"]
 };
 
 function parseVoiceObservation(spokenText, existingChildren = []) {
@@ -78,7 +79,7 @@ function parseVoiceObservation(spokenText, existingChildren = []) {
 
   // 2. Age extraction
   let ageYears = matchedChild ? matchedChild.ageYears : null;
-  const ageRegex = /(?:వయస్సు|వయసు|age|उम्र)\s*[:=\-]?\s*(\d{1,2})|(\d{1,2})\s*(?:సంవత్సరాలు|సంవత్సరాల|years|yrs|साल|वर्ष)/i;
+  const ageRegex = /(?:వయస్సు|వయసు|age|उम्र|वय|ವಯಸ್ಸು)\s*[:=\-]?\s*(\d{1,2})|(\d{1,2})\s*(?:సంవత్సరాలు|సంవత్సరాల|years|yrs|साल|वर्ष|वर्षे|ವರ್ಷ)/i;
   const ageMatch = clean.match(ageRegex);
   if (ageMatch) {
     ageYears = parseInt(ageMatch[1] || ageMatch[2], 10);
@@ -93,7 +94,7 @@ function parseVoiceObservation(spokenText, existingChildren = []) {
 
   // 3. Weight extraction (kg)
   let weightKg = null;
-  const weightRegex = /(?:బరువు|weight|वजन|wt)\s*[:=\-]?\s*(\d{1,2}(?:\.\d{1,2})?)|(\d{1,2}(?:\.\d{1,2})?)\s*(?:కిలోలు|కేజీలు|కేజీ|kg|kgs|किलो)/i;
+  const weightRegex = /(?:బరువు|weight|वजन|wt|ತೂಕ)\s*[:=\-]?\s*(\d{1,2}(?:\.\d{1,2})?)|(\d{1,2}(?:\.\d{1,2})?)\s*(?:కిలోలు|కేజీలు|కేజీ|kg|kgs|किलो|ಕಿಲೋ|ಕೆಜಿ)/i;
   const weightMatch = clean.match(weightRegex);
   if (weightMatch) {
     const w = parseFloat(weightMatch[1] || weightMatch[2]);
@@ -102,7 +103,7 @@ function parseVoiceObservation(spokenText, existingChildren = []) {
 
   // 4. Height extraction (cm)
   let heightCm = null;
-  const heightRegex = /(?:ఎత్తు|height|लंबाई|ht)\s*[:=\-]?\s*(\d{2,3}(?:\.\d{1,2})?)|(\d{2,3}(?:\.\d{1,2})?)\s*(?:cm|cms|సెం\.మీ|सेमी)/i;
+  const heightRegex = /(?:ఎత్తు|height|लंबाई|उंची|ht|ಎತ್ತರ)\s*[:=\-]?\s*(\d{2,3}(?:\.\d{1,2})?)|(\d{2,3}(?:\.\d{1,2})?)\s*(?:cm|cms|సెం\.మీ|सेमी|ಸೆಂ\.ಮೀ)/i;
   const heightMatch = clean.match(heightRegex);
   if (heightMatch) {
     const h = parseFloat(heightMatch[1] || heightMatch[2]);
@@ -113,7 +114,9 @@ function parseVoiceObservation(spokenText, existingChildren = []) {
   const mealKeywords = [
     "rice", "dal", "egg", "milk", "khichdi", "banana", "ragi", "porridge", "spinach", "balamrutham",
     "అన్నం", "పప్పు", "గుడ్డు", "పాలు", "బాలామృతం", "అరటిపండు", "ఖిచ్డీ",
-    "चावल", "दाल", "अंडा", "दूध", "खिचड़ी", "केला", "रोटी"
+    "चावल", "दाल", "अंडा", "दूध", "खिचड़ी", "केला", "रोटी",
+    "भात", "डाळ", "अंडी", "नाचणी", "पोळी",
+    "ಅನ್ನ", "ಬೇಳೆ", "ಮೊಟ್ಟೆ", "ಹಾಲು", "ರಾಗಿ", "ಬಾಳೆಹಣ್ಣು", "ಕಿಚಡಿ"
   ];
   const foundMeals = mealKeywords.filter((kw) => lower.includes(kw));
   const mealDetails = foundMeals.length > 0 ? `Detected foods: ${foundMeals.join(", ")}` : null;

@@ -175,6 +175,102 @@ const STRINGS = {
     heightLbl: "ऊंचाई (सेमी):",
     mealLbl: "पोषण / भोजन:",
     devObsLbl: "विकास अवलोकन:"
+  },
+  kn: {
+    appTitle: "ಬಾಲಮಿತ್ರ",
+    centerSub: "ಬಾಚುಪಲ್ಲಿ-1 ಕೇಂದ್ರ • ಕೋಡ್ 3601050201",
+    workerChip: "ಕಾರ್ಯಕರ್ತೆ: ಶ್ರೀಮತಿ ಪದ್ಮಾವತಿ • ಮೇಡ್ಚಲ್",
+    navToday: "ಇಂದು",
+    navObserve: "ದಾಖಲಿಸಿ",
+    navChildren: "ಮಕ್ಕಳು",
+    navInsights: "ವಿಶ್ಲೇಷಣೆ",
+    tourTitle: "ಮೌಲ್ಯಮಾಪನ ಪ್ರವಾಸ ಮೋಡ್",
+    tourSub: "ಎಲ್ಲಾ ವೈಶಿಷ್ಟ್ಯಗಳ 6-ಹಂತದ ಮಾರ್ಗದರ್ಶಿ",
+    startTour: "ಪ್ರಾರಂಭಿಸಿ",
+    centerOpen: "ಕೇಂದ್ರ ತೆರೆದಿದೆ • ಆಹಾರ ವಿತರಿಸಲಾಗಿದೆ",
+    attendanceBtn: "ಹಾಜರಾತಿ ಪುಸ್ತಕ",
+    voiceHeroTitle: "ಧ್ವನಿಯ ಮೂಲಕ ದಾಖಲಿಸಿ (ಕನ್ನಡ / ತೆಲುಗು / ಹಿಂದಿ / ಇಂಗ್ಲಿಷ್)",
+    voiceHeroSub: "15-ಸೆಕೆಂಡ್ ಧ್ವನಿ ಇನ್‌ಪುಟ್ ಮೂಲಕ ಹೆಸರು, ತೂಕ, ಆಹಾರ ಮತ್ತು ವಿಕಾಸ ದಾಖಲಾಗುತ್ತದೆ.",
+    openVoiceBtn: "ಧ್ವನಿ ದಾಖಲೆ ತೆರೆಯಿರಿ",
+    priorityTitle: "ಪ್ರಮುಖ ಪರಿಶೀಲನೆಗಳು",
+    searchPlaceholder: "ಹೆಸರು, ಐಡಿ, ಪೋಷಕರು, ವಾರ್ಡ್ ಮೂಲಕ ಹುಡುಕಿ...",
+    addChildBtn: "ಹೊಸ ಮಗು ಸೇರಿಸಿ",
+    enrolledPrefix: "ದಾಖಲಾದ ದಿನಾಂಕ",
+    backToList: "ಅಂಗನವಾಡಿ ಮಕ್ಕಳ ನೋಂದಣಿ",
+    speechTitle: "ಸ್ಪೀಚ್ ಥೆರಪಿ ಮತ್ತು RBSK ರೆಫರಲ್ ಸ್ಕ್ರೀನರ್",
+    whenToRefer: "ಸ್ಪೀಚ್ ಥೆರಪಿ ಯಾವಾಗ ಅಗತ್ಯ?",
+    adaptiveDietTitle: "ವಿಶೇಷ ಆಹಾರ ಯೋಜನೆ ಮತ್ತು ಪೋಷಣೆ",
+    multiDayNutTitle: "5-ದಿನದ ಪೋಷಣಾ ವಿಶ್ಲೇಷಣೆ",
+    connectDotsTitle: "ದೀರ್ಘಕಾಲಿಕ ಸಂಪರ್ಕ (Connect The Dots)",
+    whatChangedTitle: "ಏನು ಬದಲಾಗಿದೆ?",
+    activityTitle: "ಸೂಚಿಸಿದ ಮುಂದಿನ ಚಟುವಟಿಕೆ",
+    whyThis: "ಏಕೆ?",
+    doActivity: "ಚಟುವಟಿಕೆ ನಡೆಸಿ",
+    changeActivity: "ಬದಲಿಸಿ",
+    skipActivity: "ಬಿಡಿ",
+    explainParent: "ಪೋಷಕರಿಗೆ ವಿವರಿಸಿ",
+    timelineTitle: "ದೀರ್ಘಕಾಲಿಕ ಅವಲೋಕನ ಟೈಮ್‌ಲೈನ್",
+    poshanBtn: "ಪೋಷಣ್ ಟ್ರ್ಯಾಕರ್ CSV ರಫ್ತು ಮಾಡಿ",
+    voiceIntakeTitle: "ಧ್ವನಿ-ಮೊದಲ ಇಂಡಿಕ್ ದಾಖಲೆ",
+    voiceIntakeSub: "ಕನ್ನಡ, ತೆಲುಗು, ಹಿಂದಿ ಅಥವಾ ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ಮಾತನಾಡಿ.",
+    tapMicPrompt: "ಮಾತನಾಡಲು ಮೈಕ್ ಒತ್ತಿರಿ",
+    listeningPrompt: "ಕೇಳುತ್ತಿದೆ... ಈಗ ಮಾತನಾಡಿ",
+    extractBtn: "ವಿವರಗಳನ್ನು ಪಡೆಯಿರಿ",
+    extractedTitle: "ಪಡೆದ ರಚನಾತ್ಮಕ ದಾಖಲೆ",
+    saveRegBtn: "ಅಂಗನವಾಡಿ ನೋಂದಣಿಯಲ್ಲಿ ಉಳಿಸಿ",
+    childProfileLbl: "ಮಗುವಿನ ವಿವರ:",
+    weightLbl: "ತೂಕ (ಕೆಜಿ):",
+    heightLbl: "ಎತ್ತರ (ಸೆಂ.ಮೀ):",
+    mealLbl: "ಪೋಷಣೆ / ಆಹಾರ:",
+    devObsLbl: "ವಿಕಾಸ ಅವಲೋಕನ:"
+  },
+  mr: {
+    appTitle: "बालमित्र",
+    centerSub: "बाचुपल्ली-1 केंद्र • कोड 3601050201",
+    workerChip: "सेविका: श्रीमती पद्मावती • मेडचल",
+    navToday: "आज",
+    navObserve: "नोंदवा",
+    navChildren: "मुले",
+    navInsights: "विश्लेषण",
+    tourTitle: "मूल्यमापन टूर मोड",
+    tourSub: "सर्व वैशिष्ट्यांचे 6-टप्प्यांचे मार्गदर्शन",
+    startTour: "सुरू करा",
+    centerOpen: "केंद्र सुरू आहे • आहार वितरित",
+    attendanceBtn: "हजेरी नोंदवही",
+    voiceHeroTitle: "बोलून नोंदवा (मराठी / हिंदी / तेलुगु / इंग्रजी)",
+    voiceHeroSub: "15-सेकंदांच्या आवाजातून नाव, वजन, आहार आणि विकास आपोआप नोंदवला जातो.",
+    openVoiceBtn: "व्हॉइस इनपुट उघडा",
+    priorityTitle: "प्राधान्य तपासणी",
+    searchPlaceholder: "नाव, आयडी, पालक, वॉर्ड नुसार शोधा...",
+    addChildBtn: "नवीन नोंदणी",
+    enrolledPrefix: "प्रवेश दिनांक",
+    backToList: "अंगणवाडी बाल नोंदणी",
+    speechTitle: "स्पीच थेरपी व RBSK संदर्भ मार्गदर्शक",
+    whenToRefer: "स्पीच थेरपी केव्हा आवश्यक असते?",
+    adaptiveDietTitle: "विशेष आहार योजना आणि पोषण",
+    multiDayNutTitle: "5-दिवसीय पोषण विश्लेषण",
+    connectDotsTitle: "दीर्घकालीन संबंध (Connect The Dots)",
+    whatChangedTitle: "काय बदल झाला?",
+    activityTitle: "सुचवलेला पुढील उपक्रम",
+    whyThis: "का?",
+    doActivity: "उपक्रम घ्या",
+    changeActivity: "बदला",
+    skipActivity: "वगळा",
+    explainParent: "पालकांना समजावून सांगा",
+    timelineTitle: "दीर्घकालीन निरीक्षण टाइमलाइन",
+    poshanBtn: "पोषण ट्रॅकर CSV निर्यात करा",
+    voiceIntakeTitle: "व्हॉइस-फर्स्ट नोंदणी",
+    voiceIntakeSub: "मराठी, हिंदी, तेलुगु किंवा इंग्रजीमध्ये बोला.",
+    tapMicPrompt: "बोलण्यासाठी माइक दाबा",
+    listeningPrompt: "ऐकत आहे... आता बोला",
+    extractBtn: "तपशील काढा",
+    extractedTitle: "काढलेली संरचित नोंद",
+    saveRegBtn: "अंगणवाडी नोंदवहीत जतन करा",
+    childProfileLbl: "मुलाची प्रोफाइल:",
+    weightLbl: "वजन (किलो):",
+    heightLbl: "उंची (सेमी):",
+    mealLbl: "पोषण / आहार:",
+    devObsLbl: "विकास निरीक्षण:"
   }
 };
 
@@ -387,6 +483,8 @@ function renderObserveTab() {
           <option value="en-IN" ${appState.voiceLang === "en-IN" ? "selected" : ""}>English (en-IN)</option>
           <option value="te-IN" ${appState.voiceLang === "te-IN" ? "selected" : ""}>తెలుగు (te-IN)</option>
           <option value="hi-IN" ${appState.voiceLang === "hi-IN" ? "selected" : ""}>हिन्दी (hi-IN)</option>
+          <option value="kn-IN" ${appState.voiceLang === "kn-IN" ? "selected" : ""}>ಕನ್ನಡ (kn-IN)</option>
+          <option value="mr-IN" ${appState.voiceLang === "mr-IN" ? "selected" : ""}>मराठी (mr-IN)</option>
         </select>
       </div>
 
@@ -411,6 +509,8 @@ function renderObserveTab() {
           <button class="chip sample-voice-btn" data-vlang="en-IN" data-text="Raju weight is 9.8 kg, height 76 cm. He ate rice, dal and boiled egg today and identified yellow cup.">English Sample</button>
           <button class="chip sample-voice-btn" data-vlang="te-IN" data-text="శివ బరువు 15.8 కిలోలు. అన్నం, పప్పు తిన్నాడు. మాటలు పలకడానికి చిత్రపటాల సహాయం అవసరమైంది.">తెలుగు Sample</button>
           <button class="chip sample-voice-btn" data-vlang="hi-IN" data-text="राधा का वजन 12.6 किलो है। उसने रागी दलिया और अंडा खाया। बैठकर मिट्टी दबाने का खेल किया।">हिन्दी Sample</button>
+          <button class="chip sample-voice-btn" data-vlang="kn-IN" data-text="ಶಿವ ತೂಕ 15.8 ಕೆಜಿ. ಅನ್ನ, ಬೇಳೆ ತಿಂದಿದ್ದಾನೆ. ಮಾತಿಗೆ ಚಿತ್ರ ಕಾರ್ಡ್ ಸಹಾಯ ಬೇಕಾಯಿತು.">ಕನ್ನಡ Sample</button>
+          <button class="chip sample-voice-btn" data-vlang="mr-IN" data-text="राधा चे वजन 12.6 किलो आहे. तिने नाचणी आणि अंडी खाल्ली. बसून मातीचा खेळ खेळली.">मराठी Sample</button>
         </div>
       </div>
 
@@ -1032,6 +1132,8 @@ function openTourModal() {
   const ui = {
     te: { header: "మూల్యాంకన టూర్", back: "వెనుకకు", next: "తదుపరి దశ", finish: "టూర్ ముగించు" },
     hi: { header: "मूल्यांकनकर्ता टूर", back: "पीछे", next: "अगला चरण", finish: "टूर समाप्त" },
+    kn: { header: "ಮೌಲ್ಯಮಾಪನ ಪ್ರವಾಸ", back: "ಹಿಂದೆ", next: "ಮುಂದಿನ ಹಂತ", finish: "ಮುಗಿಸಿ" },
+    mr: { header: "मूल्यमापन टूर", back: "मागे", next: "पुढील टप्पा", finish: "पूर्ण करा" },
     en: { header: "Evaluator Tour", back: "Back", next: "Next Step", finish: "Finish Tour" }
   }[L] || { header: "Evaluator Tour", back: "Back", next: "Next Step", finish: "Finish Tour" };
 
@@ -1124,6 +1226,22 @@ function openTourModal() {
         action: () => { appState.tab = "children"; appState.selectedChildId = "child_shiva"; appState.speechExpanded = true; closeModal(); render(); }
       }
     ],
+    kn: [
+      { title: "1. ಧ್ವನಿ-ಮೊದಲ ಇಂಡಿಕ್ ದಾಖಲೆ", badge: "15-ಸೆಕೆಂಡ್ ಧ್ವನಿ vs 5-ನಿಮಿಷದ ಪುಸ್ತಕ", desc: "ಅಂಗನವಾಡಿ ಕಾರ್ಯಕರ್ತೆಯರು ಕನ್ನಡ, ತೆಲುಗು, ಹಿಂದಿ ಅಥವಾ ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ಮಾತನಾಡಬಹುದು. NLP ತಕ್ಷಣ ಹೆಸರು, ತೂಕ ಮತ್ತು ಆಹಾರವನ್ನು ದಾಖಲಿಸುತ್ತದೆ.", actionText: "ಧ್ವನಿ ದಾಖಲೆ ನೋಡಿ", action: () => { appState.tab = "observe"; closeModal(); render(); } },
+      { title: "2. ದೀರ್ಘಕಾಲಿಕ ಬೆಳವಣಿಗೆ ವಿಶ್ಲೇಷಣೆ", badge: "WHO LMS ಮಾನದಂಡ", desc: "ವಾರಗಳ ತೂಕ ಬದಲಾವಣೆ ಮತ್ತು ಅನಾರೋಗ್ಯವನ್ನು ಸಂಪರ್ಕಿಸಿ ಅಪೌಷ್ಟಿಕತೆಯನ್ನು ಮೊದಲೇ ಗುರುತಿಸುತ್ತದೆ.", actionText: "ಚಿಟ್ಟಿ ವಿವರ ನೋಡಿ", action: () => { appState.tab = "children"; appState.selectedChildId = "child_chitti"; closeModal(); render(); } },
+      { title: "3. ವಯಸ್ಸಿಗೆ ತಕ್ಕ ಆಟಗಳು ಮತ್ತು ಸಲಹೆ", badge: "ಮನೆಯ ವಸ್ತುಗಳು • ಕಾರ್ಯಕರ್ತೆ ನಿಯಂತ್ರಣ", desc: "ಮನೆಯ ಕಪ್, ಬೀಜಗಳಿಂದ ಆಡುವ ಚಟುವಟಿಕೆಗಳು ಮತ್ತು ಪೋಷಕರಿಗೆ ಸರಳ ಸಲಹೆಗಳನ್ನು ನೀಡುತ್ತದೆ.", actionText: "ಇಂದಿನ ಆದ್ಯತೆ ನೋಡಿ", action: () => { appState.tab = "today"; closeModal(); render(); } },
+      { title: "4. ನೇರ ಹಾಜರಾತಿ ಪುಸ್ತಕ", badge: "ಲೈವ್ ಕ್ಯಾಲೆಂಡರ್ • 15 ಮಕ್ಕಳು", desc: "THR ಮತ್ತು HCM ಆಹಾರ ವಿತರಣೆಯೊಂದಿಗೆ ದೈನಂದಿನ ಹಾಜರಾತಿಯನ್ನು ಒಂದು ಟ್ಯಾಪ್‌ನಲ್ಲಿ ದಾಖಲಿಸಿ.", actionText: "ಹಾಜರಾತಿ ತೆರೆಯಿರಿ", action: () => { closeModal(); openAttendanceModal(); } },
+      { title: "5. ಪೋಷಣ್ ಟ್ರ್ಯಾಕರ್ CSV ರಫ್ತು", badge: "MoWCD / ICDS ಅಧಿಕೃತ CSV", desc: "ಎರಡು ಬಾರಿ ಡೇಟಾ ನಮೂದಿಸುವುದನ್ನು ತಪ್ಪಿಸಿ ಅಧಿಕೃತ CSV ಫೈಲ್ ಪಡೆಯಿರಿ.", actionText: "ಪೋಷಣ್ CSV ನೋಡಿ", action: () => { closeModal(); openPoshanModal(); } },
+      { title: "6. ವಿಶೇಷ ಚೇತನ ಮಕ್ಕಳು ಮತ್ತು ಸ್ಪೀಚ್ ಥೆರಪಿ", badge: "RBSK / DEIC ಮಾರ್ಗದರ್ಶಿ", desc: "ವಿಶೇಷ ಅಗತ್ಯವುಳ್ಳ ಮಕ್ಕಳಿಗೆ (ಶಿವ, ರಾಧಾ, ಮಹೇಶ್) ವಿಶೇಷ ಆಟಗಳು, ಆಹಾರ ಯೋಜನೆ ಮತ್ತು ಸ್ಪೀಚ್ ಥೆರಪಿ ಸ್ಕ್ರೀನರ್.", actionText: "ಶಿವ ಪ್ರೊಫೈಲ್ ನೋಡಿ", action: () => { appState.tab = "children"; appState.selectedChildId = "child_shiva"; appState.speechExpanded = true; closeModal(); render(); } }
+    ],
+    mr: [
+      { title: "1. व्हॉइस-फर्स्ट इंडिक नोंदणी", badge: "15-सेकंद आवाज vs 5-मिनिट रजिस्टर", desc: "अंगणवाडी सेविका मराठी, हिंदी, तेलुगु किंवा इंग्रजीमध्ये बोलू शकतात. NLP नाव, वजन आणि आहार लगेच नोंदवते.", actionText: "व्हॉइस नोंदणी पहा", action: () => { appState.tab = "observe"; closeModal(); render(); } },
+      { title: "2. दीर्घकालीन वाढ विश्लेषण", badge: "WHO LMS मानक इंजिन", desc: "आठवड्यांच्या वजनातील चढ-उतार आणि आजारपण जोडून कुपोषण लवकर ओळखते.", actionText: "चिट्टीची माहिती पहा", action: () => { appState.tab = "children"; appState.selectedChildId = "child_chitti"; closeModal(); render(); } },
+      { title: "3. वयानुसार खेळ आणि पालक मार्गदर्शन", badge: "घरगुती साहित्य • सेविका नियंत्रण", desc: "घरातील कप, बिया वापरून उपक्रम सुचवते आणि मातांसाठी सोपे मार्गदर्शन देते.", actionText: "आजचे प्राधान्य पहा", action: () => { appState.tab = "today"; closeModal(); render(); } },
+      { title: "4. थेट हजेरी नोंदवही", badge: "लाइव्ह कॅलेंडर • 15 मुले", desc: "THR आणि HCM आहार नोंदींसह दैनंदिन हजेरी एका क्लिकमध्ये नोंदवा.", actionText: "हजेरी उघडा", action: () => { closeModal(); openAttendanceModal(); } },
+      { title: "5. पोषण ट्रॅकर CSV निर्यात", badge: "MoWCD / ICDS अधिकृत CSV", desc: "दुहेरी डेटा एन्ट्री टाळून अधिकृत पोषण ट्रॅकर CSV त्वरित तयार करते.", actionText: "पोषण CSV पहा", action: () => { closeModal(); openPoshanModal(); } },
+      { title: "6. समावेशक विकास आणि स्पीच थेरपी", badge: "RBSK / DEIC प्रोटोकॉल", desc: "विशेष गरजा असलेल्या मुलांसाठी (शिव, राधा, महेश) खास खेळ, आहार योजना आणि स्पीच थेरपी मार्गदर्शक.", actionText: "शिवची प्रोफाइल पहा", action: () => { appState.tab = "children"; appState.selectedChildId = "child_shiva"; appState.speechExpanded = true; closeModal(); render(); } }
+    ],
     en: [
       {
         title: "1. Hands-Free Indic Voice Intake",
@@ -1200,7 +1318,7 @@ function openTourModal() {
 document.querySelectorAll(".lang-btn").forEach((btn) => {
   btn.onclick = () => {
     appState.lang = btn.dataset.lang;
-    appState.voiceLang = btn.dataset.lang === "te" ? "te-IN" : btn.dataset.lang === "hi" ? "hi-IN" : "en-IN";
+    const vMap = { te: "te-IN", hi: "hi-IN", kn: "kn-IN", mr: "mr-IN", en: "en-IN" }; appState.voiceLang = vMap[btn.dataset.lang] || "en-IN";
     fetchState();
   };
 });

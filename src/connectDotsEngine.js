@@ -26,6 +26,20 @@ function connectTheDots(child, growths, nutritions, developments, lang = "en") {
         recommendation: "दैनिक चित्र-कार्ड अभ्यास के साथ RBSK/DEIC स्पीच थेरेपी स्क्रीनिंग जारी रखें।"
       };
     }
+    if (lang === "kn") {
+      return {
+        headline: "ಮಾತು ಮತ್ತು ಶ್ರವಣ ವಿಕಾಸದ ಸಂಬಂಧ",
+        story: `${child.name} ಚಿತ್ರ-ಕಾರ್ಡ್‌ಗಳು ಮತ್ತು ಸನ್ನೆಗಳಿಗೆ ಉತ್ತಮವಾಗಿ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತಿದ್ದಾರೆ. ಮೃದುವಾದ ಆಹಾರವು ಬಾಯಿ ಮತ್ತು ನಾಲಿಗೆಯ ಚಲನೆಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ.`,
+        recommendation: "ದೈನಂದಿನ ಚಿತ್ರ-ಕಾರ್ಡ್ ಅಭ್ಯಾಸದೊಂದಿಗೆ RBSK / DEIC ಸ್ಪೀಚ್ ಸ್ಕ್ರೀನಿಂಗ್ ಮುಂದುವರಿಸಿ."
+      };
+    }
+    if (lang === "mr") {
+      return {
+        headline: "बोलणे आणि श्रवण विकासाचा संबंध",
+        story: `${child.name} चित्र-कार्ड आणि हावभावांना चांगला प्रतिसाद देत आहेत. मऊ आहारामुळे तोंडाच्या स्नायूंची ताकद वाढण्यास मदत होते.`,
+        recommendation: "दररोजच्या चित्र-कार्ड सरावासोबत RBSK / DEIC स्पीच तपासणी सुरू ठेवा."
+      };
+    }
     return {
       headline: "🗣️ Oral-Motor Nutrition & Speech Trajectory Linked",
       story: `${child.name} responds strongly to visual cues and gestures, while 2-step verbal instructions still need visual scaffolding. Steady weight (${latestW || 15.6} kg) paired with soft mastication meals supports oral-motor tongue mobility.`,
@@ -69,6 +83,20 @@ function connectTheDots(child, growths, nutritions, developments, lang = "en") {
       recommendation: "वर्तमान पोषण योजना और आयु-अनुकूल खेल गतिविधियां जारी रखें।"
     };
   }
+  if (lang === "kn") {
+    return {
+      headline: "ಪೋಷಣೆ ಮತ್ತು ವಿಕಾಸದ ಸಕಾರಾತ್ಮಕ ಸಮತೋಲನ",
+      story: `${child.name} ನಿಯಮಿತ ತೂಕ (${latestW || "ದಾಖಲಾಗಿದೆ"} ಕೆಜಿ) ಮತ್ತು ಕೇಂದ್ರದ ಚಟುವಟಿಕೆಗಳಲ್ಲಿ ಉತ್ತಮ ಪ್ರಗತಿ ತೋರಿಸುತ್ತಿದ್ದಾರೆ.`,
+      recommendation: "ಪ್ರಸ್ತುತ ಪೋಷಣಾ ಆಹಾರ ಮತ್ತು ವಯಸ್ಸಿಗೆ ತಕ್ಕ ಆಟಗಳನ್ನು ಮುಂದುವರಿಸಿ."
+    };
+  }
+  if (lang === "mr") {
+    return {
+      headline: "पोषण आणि विकासाचा सकारात्मक समन्वय",
+      story: `${child.name} यांचे वजन (${latestW || "नोंदवलेले"} किलो) नियमित वाढत असून केंद्रातील उपक्रमांत सहभाग चांगला आहे.`,
+      recommendation: "सध्याची पोषण योजना आणि वयानुसार खेळ उपक्रम सुरू ठेवा."
+    };
+  }
   return {
     headline: "✅ Positive Nutrition-to-Development Alignment",
     story: `${child.name} shows steady longitudinal growth (${latestW ? latestW + " kg" : "baseline tracked"}) supported by regular AWC meal intake.${devFollowUp ? " Targeted practice on flagged developmental milestones is recommended." : ""}`,
@@ -98,6 +126,12 @@ function getWhatChangedSummary(child, growths, developments, lang = "en") {
   }
   if (lang === "hi") {
     return `वजन में बदलाव: ${prev ? `${prev.weightKg} kg → ${latest.weightKg} kg (${deltaW > 0 ? "+" : ""}${deltaW} kg)` : `${latest.weightKg} kg (प्रारंभिक)`}। ${deltaH ? `ऊंचाई: +${deltaH} cm।` : ""} कुल विकास अवलोकन: ${devCount}।`;
+  }
+  if (lang === "kn") {
+    return `ತೂಕ ಬದಲಾವಣೆ: ${prev ? `${prev.weightKg} kg → ${latest.weightKg} kg (${deltaW > 0 ? "+" : ""}${deltaW} kg)` : `${latest.weightKg} kg (ಪ್ರಾರಂಭ)`}. ಒಟ್ಟು ವಿಕಾಸ ದಾಖಲೆಗಳು: ${devCount}.`;
+  }
+  if (lang === "mr") {
+    return `वजनात बदल: ${prev ? `${prev.weightKg} kg → ${latest.weightKg} kg (${deltaW > 0 ? "+" : ""}${deltaW} kg)` : `${latest.weightKg} kg (प्राथमिक)`}. एकूण विकास नोंदी: ${devCount}.`;
   }
   return `Weight Change: ${prev ? `${prev.weightKg} kg → ${latest.weightKg} kg (${deltaW > 0 ? "+" : ""}${deltaW} kg)` : `${latest.weightKg} kg (Baseline)`}. ${deltaH ? `Height: +${deltaH} cm.` : ""} Total developmental logs: ${devCount}.`;
 }

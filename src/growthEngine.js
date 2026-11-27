@@ -33,6 +33,8 @@ function getTrajectorySummary(currentWeightKg, previousWeightKg, lang = "en") {
   if (previousWeightKg == null) {
     if (lang === "te") return `ప్రస్తుత బరువు: ${currentWeightKg} కిలోలు. ప్రాథమిక రికార్డు నమోదైంది.`;
     if (lang === "hi") return `वर्तमान वजन: ${currentWeightKg} किग्रा। आधारभूत रिकॉर्ड दर्ज किया गया।`;
+    if (lang === "kn") return `ಪ್ರಸ್ತುತ ತೂಕ: ${currentWeightKg} ಕೆಜಿ. ಪ್ರಾಥಮಿಕ ದಾಖಲೆ ಸೇರಿಸಲಾಗಿದೆ.`;
+    if (lang === "mr") return `सध्याचे वजन: ${currentWeightKg} किलो. प्राथमिक नोंदणी पूर्ण झाली.`;
     return `Current weight recorded: ${currentWeightKg} kg. Baseline established.`;
   }
   const diff = currentWeightKg - previousWeightKg;
@@ -40,15 +42,21 @@ function getTrajectorySummary(currentWeightKg, previousWeightKg, lang = "en") {
   if (diff > 0.05) {
     if (lang === "te") return `మునుపటి కొలత కంటే ${absDiff} కిలోలు పెరిగింది. ఎదుగుదల సానుకూలంగా ఉంది.`;
     if (lang === "hi") return `पिछली माप से वजन ${absDiff} किग्रा बढ़ा है। विकास की दिशा सकारात्मक है।`;
+    if (lang === "kn") return `ಹಿಂದಿನ ಅಳತೆಗಿಂತ ${absDiff} ಕೆಜಿ ತೂಕ ಹೆಚ್ಚಾಗಿದೆ. ಬೆಳವಣಿಗೆ ಉತ್ತಮವಾಗಿದೆ.`;
+    if (lang === "mr") return `मागील मोजमापापेक्षा वजन ${absDiff} किलोने वाढले आहे. वाढ सकारात्मक आहे.`;
     return `Weight increased by ${absDiff} kg since previous measurement. Trajectory is positive.`;
   }
   if (diff < -0.2) {
     if (lang === "te") return `మునుపటి కొలత కంటే ${absDiff} కిలోలు తగ్గింది. పోషకాహార సమీక్ష అవసరం.`;
     if (lang === "hi") return `पिछली माप से वजन ${absDiff} किग्रा कम हुआ है। पोषण समीक्षा की आवश्यकता है।`;
+    if (lang === "kn") return `ಹಿಂದಿನ ಅಳತೆಗಿಂತ ${absDiff} ಕೆಜಿ ತೂಕ ಕಡಿಮೆಯಾಗಿದೆ. ಪೋಷಣೆ ಪರಿಶೀಲನೆ ಅಗತ್ಯ.`;
+    if (lang === "mr") return `मागील मोजमापापेक्षा वजन ${absDiff} किलोने कमी झाले आहे. पोषण तपासणी आवश्यक.`;
     return `Weight decreased by ${absDiff} kg since previous measurement. Trajectory indicates review.`;
   }
   if (lang === "te") return `బరువు స్థిరంగా ఉంది (${currentWeightKg} కిలోలు).`;
   if (lang === "hi") return `वजन स्थिर है (${currentWeightKg} किग्रा)।`;
+  if (lang === "kn") return `ತೂಕ ಸ್ಥಿರವಾಗಿದೆ (${currentWeightKg} ಕೆಜಿ).`;
+  if (lang === "mr") return `वजन स्थिर आहे (${currentWeightKg} किलो).`;
   return `Weight is stable (${currentWeightKg} kg) relative to previous measurement.`;
 }
 

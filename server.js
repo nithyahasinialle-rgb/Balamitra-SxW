@@ -123,7 +123,7 @@ app.get("/api/health", (req, res) => {
 });
 
 app.get("/api/state", (req, res) => {
-  const lang = ["en", "te", "hi"].includes(req.query.lang) ? req.query.lang : "en";
+  const lang = ["en", "te", "hi", "kn", "mr"].includes(req.query.lang) ? req.query.lang : "en";
   const enrichedChildren = db.children.map((c) => enrichChild(c, lang));
   res.json({
     children: enrichedChildren,
