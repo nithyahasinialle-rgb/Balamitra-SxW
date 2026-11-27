@@ -289,6 +289,8 @@ body.scale-xl .main-content, body.scale-xl .modal-card { zoom: 1.24; }
   align-items: center;
   gap: 4px;
   font-size: 10px;
+  min-width: 0;
+  overflow: hidden;
   font-weight: 700;
   padding: 3px 7px;
   border-radius: 6px;
@@ -426,7 +428,7 @@ body.scale-xl .main-content, body.scale-xl .modal-card { zoom: 1.24; }
 
 .day-strip {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 6px;
   margin-top: 8px;
 }
@@ -438,6 +440,8 @@ body.scale-xl .main-content, body.scale-xl .modal-card { zoom: 1.24; }
   padding: 6px 4px;
   text-align: center;
   font-size: 10px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .dot-row {
@@ -571,6 +575,8 @@ body.scale-xl .main-content, body.scale-xl .modal-card { zoom: 1.24; }
 
 .stat-lbl {
   font-size: 10px;
+  min-width: 0;
+  overflow: hidden;
   font-weight: 600;
   color: var(--muted);
   margin-top: 2px;
