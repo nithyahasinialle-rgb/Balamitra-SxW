@@ -1,5 +1,5 @@
 /**
- * Multilingual Indic Voice-First NLP Parser (Telugu, Hindi, English)
+ * Multilingual Indic Voice-First NLP Parser (Telugu, Hindi, Kannada, Marathi, English)
  * Extracts child identity, age, weight, height, meals, illness, and developmental notes.
  */
 
@@ -94,7 +94,7 @@ function parseVoiceObservation(spokenText, existingChildren = []) {
 
   // 3. Weight extraction (kg)
   let weightKg = null;
-  const weightRegex = /(?:బరువు|weight|वजन|wt|ತೂಕ)\s*[:=\-]?\s*(\d{1,2}(?:\.\d{1,2})?)|(\d{1,2}(?:\.\d{1,2})?)\s*(?:కిలోలు|కేజీలు|కేజీ|kg|kgs|किलो|ಕಿಲೋ|ಕೆಜಿ)/i;
+  const weightRegex = /(?:బరువు|weight|वजन|wt|ತೂಕ)\s*[:=\-]?\s*(\d{1,2}(?:\.\d{1,2})?)|(\d{1,2}(?:\.\d{1,2})?)\s*(?:కిలోలు|కేజీలు|కేజీ|kg|kgs|किलो|ಕಿಲೋ|ಕೆಜಿ)/i;
   const weightMatch = clean.match(weightRegex);
   if (weightMatch) {
     const w = parseFloat(weightMatch[1] || weightMatch[2]);
@@ -103,7 +103,7 @@ function parseVoiceObservation(spokenText, existingChildren = []) {
 
   // 4. Height extraction (cm)
   let heightCm = null;
-  const heightRegex = /(?:ఎత్తు|height|लंबाई|उंची|ht|ಎತ್ತರ)\s*[:=\-]?\s*(\d{2,3}(?:\.\d{1,2})?)|(\d{2,3}(?:\.\d{1,2})?)\s*(?:cm|cms|సెం\.మీ|सेमी|ಸೆಂ\.ಮೀ)/i;
+  const heightRegex = /(?:ఎత్తు|height|लंबाई|उंची|ht|ಎತ್ತರ)\s*[:=\-]?\s*(\d{2,3}(?:\.\d{1,2})?)|(\d{2,3}(?:\.\d{1,2})?)\s*(?:cm|cms|సెం\.మీ|सेमी|ಸೆಂ\.ಮೀ)/i;
   const heightMatch = clean.match(heightRegex);
   if (heightMatch) {
     const h = parseFloat(heightMatch[1] || heightMatch[2]);

@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// Runtime store initialized from SeedData (persists to data/runtime-db.json if available)
+// In-memory runtime store seeded from SeedData (demo only: new records reset on restart)
 const db = {
   children: JSON.parse(JSON.stringify(seed.children)),
   growthObservations: JSON.parse(JSON.stringify(seed.growthObservations)),
@@ -69,15 +69,15 @@ function enrichChild(child, lang = "en") {
   const multiDayNutrition = {
     dietaryDiversityScore: ddsScore,
     diversityRating: ddsScore >= 4
-      ? (lang === "te" ? "మంచి ఆహార వైవిధ్యం" : lang === "hi" ? "अच्छा आहार विविधता स्कोर" : "Strong Dietary Diversity")
-      : (lang === "te" ? "మధ్యస్థ వైవిధ్యం — ఆకుకూరలు/పండ్లు పెంచండి" : lang === "hi" ? "मध्यम विविधता — हरी सब्ज़ी/फल जोड़ें" : "Moderate Diversity — Add Greens & Fruit"),
+      ? (lang === "te" ? "మంచి ఆహార వైవిధ్యం" : lang === "hi" ? "अच्छा आहार विविधता स्कोर" : lang === "kn" ? "ಉತ್ತಮ ಆಹಾರ ವೈವಿಧ್ಯ" : lang === "mr" ? "उत्तम आहार विविधता" : "Strong Dietary Diversity")
+      : (lang === "te" ? "మధ్యస్థ వైవిధ్యం — ఆకుకూరలు/పండ్లు పెంచండి" : lang === "hi" ? "मध्यम विविधता — हरी सब्ज़ी/फल जोड़ें" : lang === "kn" ? "ಮಧ್ಯಮ ವೈವಿಧ್ಯ — ಸೊಪ್ಪು/ಹಣ್ಣು ಸೇರಿಸಿ" : lang === "mr" ? "मध्यम विविधता — पालेभाज्या/फळे वाढवा" : "Moderate Diversity — Add Greens & Fruit"),
     daysStrip,
     mainObservation: child.specialNeedsType
-      ? (lang === "te" ? "ప్రత్యేక పోషణ ప్రణాళికతో పాటు 5-రోజుల ఆహార సమతుల్యత ట్రాక్ చేయబడింది." : lang === "hi" ? "विशेष पोषण योजना के साथ 5-दिवसीय आहार पैटर्न ट्रैक किया गया।" : "5-day intake tracked alongside specialized adaptive feeding pattern.")
-      : (lang === "te" ? "గత 5 రోజులలో కార్బోహైడ్రేట్ మరియు ప్రోటీన్ సమతుల్యత పరిశీలించబడింది." : lang === "hi" ? "पिछले 5 दिनों में अनाज व प्रोटीन संतुलन की समीक्षा की गई।" : "5-day longitudinal meal pattern reviewed for protein and micronutrient balance."),
+      ? (lang === "te" ? "ప్రత్యేక పోషణ ప్రణాళికతో పాటు 5-రోజుల ఆహార సమతుల్యత ట్రాక్ చేయబడింది." : lang === "hi" ? "विशेष पोषण योजना के साथ 5-दिवसीय आहार पैटर्न ट्रैक किया गया।" : lang === "kn" ? "ವಿಶೇಷ ಪೋಷಣೆ ಯೋಜನೆಯೊಂದಿಗೆ 5 ದಿನಗಳ ಆಹಾರ ಕ್ರಮ ಗಮನಿಸಲಾಗಿದೆ." : lang === "mr" ? "विशेष पोषण योजनेसह 5 दिवसांचा आहार क्रम नोंदवला." : "5-day intake tracked alongside specialized adaptive feeding pattern.")
+      : (lang === "te" ? "గత 5 రోజులలో కార్బోహైడ్రేట్ మరియు ప్రోటీన్ సమతుల్యత పరిశీలించబడింది." : lang === "hi" ? "पिछले 5 दिनों में अनाज व प्रोटीन संतुलन की समीक्षा की गई।" : lang === "kn" ? "ಕಳೆದ 5 ದಿನಗಳ ಧಾನ್ಯ ಮತ್ತು ಪ್ರೋಟೀನ್ ಸಮತೋಲನ ಪರಿಶೀಲಿಸಲಾಗಿದೆ." : lang === "mr" ? "मागील 5 दिवसांतील धान्य व प्रथिने संतुलन तपासले." : "5-day longitudinal meal pattern reviewed for protein and micronutrient balance."),
     actionableSuggestion: ddsScore < 5
-      ? (lang === "te" ? "ఆకుకూర పప్పు (పాలకూర/మునగ) మరియు అరటిపండును వారంలో 3 సార్లు జోడించండి." : lang === "hi" ? "सप्ताह में 3 बार पालक/सहजन दाल और केला शामिल करें।" : "Include drumstick/spinach dal and seasonal banana 3x this week to reach DDS 5/5.")
-      : (lang === "te" ? "అద్భుతమైన పోషకాహార వైవిధ్యం! ఇదే మెనూను కొనసాగించండి." : lang === "hi" ? "उत्कृष्ट आहार विविधता! यही पोषण क्रम जारी रखें।" : "Optimal 5/5 dietary diversity achieved. Sustain current AWC & home meal mix.")
+      ? (lang === "te" ? "ఆకుకూర పప్పు (పాలకూర/మునగ) మరియు అరటిపండును వారంలో 3 సార్లు జోడించండి." : lang === "hi" ? "सप्ताह में 3 बार पालक/सहजन दाल और केला शामिल करें।" : lang === "kn" ? "ವಾರಕ್ಕೆ 3 ಬಾರಿ ಪಾಲಕ್/ನುಗ್ಗೆ ಸೊಪ್ಪಿನ ಬೇಳೆ ಮತ್ತು ಬಾಳೆಹಣ್ಣು ಸೇರಿಸಿ." : lang === "mr" ? "आठवड्यातून 3 वेळा पालक/शेवगा डाळ आणि केळी द्या." : "Include drumstick/spinach dal and seasonal banana 3x this week to reach DDS 5/5.")
+      : (lang === "te" ? "అద్భుతమైన పోషకాహార వైవిధ్యం! ఇదే మెనూను కొనసాగించండి." : lang === "hi" ? "उत्कृष्ट आहार विविधता! यही पोषण क्रम जारी रखें।" : lang === "kn" ? "ಅತ್ಯುತ್ತಮ ಆಹಾರ ವೈವಿಧ್ಯ! ಇದೇ ಆಹಾರ ಕ್ರಮ ಮುಂದುವರಿಸಿ." : lang === "mr" ? "उत्कृष्ट आहार विविधता! हाच आहार क्रम सुरू ठेवा." : "Optimal 5/5 dietary diversity achieved. Sustain current AWC & home meal mix.")
   };
 
   // Personalized activity routing: prioritize specialNeedsType first

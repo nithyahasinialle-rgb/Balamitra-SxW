@@ -1,5 +1,6 @@
 /**
- * Deterministic WHO LMS & Trajectory Growth Engine
+ * Deterministic WHO-median growth proxy (WAZ/HAZ) & trajectory engine.
+ * Uses an approximated SD, not the full WHO LMS method.
  * Adheres strictly to non-diagnostic, neutral observational language.
  */
 
